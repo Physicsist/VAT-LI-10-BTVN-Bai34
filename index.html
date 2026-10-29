@@ -1,0 +1,1826 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Chủ đề 34: Khối Lượng Riêng & Áp Suất Chất Lỏng - Luyện Tập Vật Lí 10</title>
+  <style>
+    :root {
+      --bg: #f4f7fb;
+      --card: #ffffff;
+      --primary: #1d4ed8;
+      --primary-hover: #1e40af;
+      --primary-light: #dbeafe;
+      --accent: #f59e0b;
+      --accent-light: #fef3c7;
+      --success: #16a34a;
+      --success-bg: #dcfce7;
+      --danger: #dc2626;
+      --danger-bg: #fee2e2;
+      --text: #0f172a;
+      --muted: #475569;
+      --border: #cbd5e1;
+      --radius: 14px;
+      --shadow: 0 6px 20px rgba(15, 23, 42, 0.07);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.55;
+      padding-bottom: 60px;
+    }
+
+    .container {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 18px 16px;
+    }
+
+    /* HEADER */
+    .app-header {
+      background: linear-gradient(135deg, #0f172a 0%, #1d4ed8 100%);
+      color: #fff;
+      border-radius: var(--radius);
+      padding: 20px 24px;
+      box-shadow: var(--shadow);
+      margin-bottom: 18px;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .header-title h1 {
+      font-size: 1.45rem;
+      font-weight: 800;
+      letter-spacing: -0.01em;
+      margin-bottom: 4px;
+    }
+
+    .header-title p {
+      font-size: 0.92rem;
+      opacity: 0.92;
+    }
+
+    .header-badges {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .badge {
+      background: rgba(255, 255, 255, 0.16);
+      border: 1px solid rgba(255, 255, 255, 0.28);
+      padding: 6px 12px;
+      border-radius: 999px;
+      font-size: 0.82rem;
+      font-weight: 600;
+    }
+
+    /* 3 REQUIRED CONTROLS BAR */
+    .controls-panel {
+      background: var(--card);
+      border: 2px solid #bfdbfe;
+      border-radius: var(--radius);
+      padding: 16px 18px;
+      box-shadow: var(--shadow);
+      margin-bottom: 18px;
+      display: grid;
+      grid-template-columns: 1.4fr 1fr 1fr;
+      gap: 14px;
+      align-items: stretch;
+    }
+
+    @media (max-width: 820px) {
+      .controls-panel {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .control-box {
+      background: #f8fafc;
+      border: 1.5px solid var(--border);
+      border-radius: 12px;
+      padding: 12px 14px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    .control-label {
+      font-size: 0.78rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      color: var(--primary);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .student-inputs {
+      display: grid;
+      grid-template-columns: 1.5fr 1fr;
+      gap: 8px;
+    }
+
+    .student-inputs input {
+      width: 100%;
+      padding: 9px 11px;
+      border: 1.5px solid #94a3b8;
+      border-radius: 8px;
+      font-size: 0.93rem;
+      font-weight: 600;
+      color: var(--text);
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+
+    .student-inputs input:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+    }
+
+    .btn-action {
+      border: none;
+      border-radius: 10px;
+      padding: 11px 14px;
+      font-size: 0.92rem;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      transition: transform 0.12s, background 0.2s, box-shadow 0.2s;
+      width: 100%;
+    }
+
+    .btn-action:active {
+      transform: scale(0.98);
+    }
+
+    .btn-sound {
+      background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+      color: #fff;
+      box-shadow: 0 4px 12px rgba(245, 158, 11, 0.3);
+    }
+
+    .btn-sound.muted {
+      background: #64748b;
+      box-shadow: none;
+    }
+
+    .btn-sound-test {
+      background: #fef3c7;
+      color: #92400e;
+      border: 1px solid #fcd34d;
+      padding: 5px 10px;
+      border-radius: 7px;
+      font-size: 0.78rem;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .btn-report {
+      background: linear-gradient(135deg, #059669 0%, #10b981 100%);
+      color: #fff;
+      box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+      height: 100%;
+      min-height: 52px;
+      font-size: 0.96rem;
+    }
+
+    .btn-report:hover {
+      background: linear-gradient(135deg, #047857 0%, #059669 100%);
+    }
+
+    /* SOUND TOAST */
+    .sound-toast {
+      position: fixed;
+      top: 18px;
+      right: 18px;
+      z-index: 1000;
+      padding: 12px 18px;
+      border-radius: 12px;
+      font-weight: 800;
+      font-size: 0.95rem;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.18);
+      transform: translateY(-120%);
+      opacity: 0;
+      transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.25s;
+      pointer-events: none;
+      max-width: 350px;
+    }
+
+    .sound-toast.show {
+      transform: translateY(0);
+      opacity: 1;
+    }
+
+    .sound-toast.correct {
+      background: #16a34a;
+      color: #ffffff;
+      border: 2px solid #86efac;
+    }
+
+    .sound-toast.wrong {
+      background: #dc2626;
+      color: #ffffff;
+      border: 2px solid #fca5a5;
+    }
+
+    /* LEVEL TABS & LOCK PROGRESS */
+    .unlock-banner {
+      background: linear-gradient(90deg, #eff6ff 0%, #fef3c7 100%);
+      border: 2px solid #93c5fd;
+      border-radius: var(--radius);
+      padding: 14px 18px;
+      margin-bottom: 18px;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .unlock-info {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .unlock-title {
+      font-weight: 800;
+      font-size: 0.98rem;
+      color: #1e3a8a;
+    }
+
+    .unlock-subtitle {
+      font-size: 0.86rem;
+      color: #334155;
+    }
+
+    .stars-box {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .star-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 6px 12px;
+      border-radius: 999px;
+      font-size: 0.84rem;
+      font-weight: 800;
+      background: #e2e8f0;
+      color: #475569;
+      border: 1.5px solid #cbd5e1;
+    }
+
+    .star-pill.done {
+      background: #dcfce7;
+      color: #15803d;
+      border-color: #4ade80;
+    }
+
+    .level-tabs {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      margin-bottom: 18px;
+    }
+
+    @media (max-width: 680px) {
+      .level-tabs {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .level-tab {
+      background: var(--card);
+      border: 2px solid var(--border);
+      border-radius: 12px;
+      padding: 12px 14px;
+      cursor: pointer;
+      text-align: left;
+      transition: all 0.18s;
+      position: relative;
+    }
+
+    .level-tab.active {
+      border-color: var(--primary);
+      background: #eff6ff;
+      box-shadow: 0 4px 14px rgba(37, 99, 235, 0.15);
+    }
+
+    .level-tab.locked {
+      opacity: 0.65;
+      background: #f1f5f9;
+      cursor: not-allowed;
+    }
+
+    .level-tab-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 4px;
+    }
+
+    .level-name {
+      font-weight: 800;
+      font-size: 0.96rem;
+      color: var(--text);
+    }
+
+    .level-status-badge {
+      font-size: 0.75rem;
+      font-weight: 700;
+      padding: 2px 8px;
+      border-radius: 999px;
+      background: #e2e8f0;
+      color: #334155;
+    }
+
+    .level-tab.active .level-status-badge {
+      background: var(--primary);
+      color: #fff;
+    }
+
+    .level-desc {
+      font-size: 0.82rem;
+      color: var(--muted);
+    }
+
+    /* LEVEL TOOLBAR */
+    .level-toolbar {
+      background: var(--card);
+      border: 1.5px solid var(--border);
+      border-radius: 12px;
+      padding: 12px 16px;
+      margin-bottom: 16px;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .level-stats {
+      display: flex;
+      gap: 14px;
+      flex-wrap: wrap;
+      font-size: 0.9rem;
+      font-weight: 700;
+    }
+
+    .stat-item span {
+      color: var(--primary);
+    }
+
+    .btn-shuffle {
+      background: var(--primary);
+      color: #fff;
+      border: none;
+      padding: 8px 14px;
+      border-radius: 8px;
+      font-weight: 700;
+      font-size: 0.86rem;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .btn-shuffle:hover {
+      background: var(--primary-hover);
+    }
+
+    /* QUESTION CARDS */
+    .questions-list {
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
+
+    .question-card {
+      background: var(--card);
+      border: 2px solid var(--border);
+      border-radius: var(--radius);
+      padding: 18px 20px;
+      box-shadow: var(--shadow);
+      transition: border-color 0.2s;
+    }
+
+    .question-card.answered-correct {
+      border-color: #4ade80;
+    }
+
+    .question-card.answered-wrong {
+      border-color: #f87171;
+    }
+
+    .q-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+      gap: 8px;
+    }
+
+    .q-num {
+      background: var(--primary-light);
+      color: var(--primary);
+      font-weight: 800;
+      font-size: 0.86rem;
+      padding: 4px 11px;
+      border-radius: 999px;
+    }
+
+    .q-tag {
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: var(--muted);
+      background: #f1f5f9;
+      padding: 3px 10px;
+      border-radius: 999px;
+    }
+
+    .q-text {
+      font-size: 1.03rem;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 12px;
+    }
+
+    .q-illustration {
+      background: #f8fafc;
+      border: 1.5px solid #e2e8f0;
+      border-radius: 12px;
+      padding: 10px;
+      margin-bottom: 14px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow-x: auto;
+    }
+
+    .q-illustration svg {
+      max-width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    .options-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+    }
+
+    @media (max-width: 640px) {
+      .options-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .option-btn {
+      background: #f8fafc;
+      border: 2px solid #cbd5e1;
+      border-radius: 10px;
+      padding: 11px 14px;
+      text-align: left;
+      font-size: 0.96rem;
+      font-weight: 600;
+      color: var(--text);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      transition: all 0.15s;
+    }
+
+    .option-btn:hover:not(:disabled) {
+      border-color: var(--primary);
+      background: #eff6ff;
+    }
+
+    .option-btn:disabled {
+      cursor: default;
+    }
+
+    .option-letter {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: #e2e8f0;
+      color: #1e293b;
+      font-weight: 800;
+      font-size: 0.85rem;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .option-btn.correct {
+      background: var(--success-bg);
+      border-color: var(--success);
+      color: #065f46;
+    }
+
+    .option-btn.correct .option-letter {
+      background: var(--success);
+      color: #fff;
+    }
+
+    .option-btn.wrong {
+      background: var(--danger-bg);
+      border-color: var(--danger);
+      color: #7f1d1d;
+    }
+
+    .option-btn.wrong .option-letter {
+      background: var(--danger);
+      color: #fff;
+    }
+
+    .feedback-box {
+      margin-top: 12px;
+      padding: 12px 14px;
+      border-radius: 10px;
+      font-size: 0.92rem;
+      display: none;
+    }
+
+    .feedback-box.show {
+      display: block;
+    }
+
+    .feedback-box.correct {
+      background: #f0fdf4;
+      border: 1.5px solid #86efac;
+      color: #14532d;
+    }
+
+    .feedback-box.wrong {
+      background: #fef2f2;
+      border: 1.5px solid #fca5a5;
+      color: #7f1d1d;
+    }
+
+    .feedback-title {
+      font-weight: 800;
+      margin-bottom: 4px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    /* MATH STYLING */
+    .math {
+      font-family: "Cambria Math", "Times New Roman", Times, serif;
+      font-style: italic;
+      font-weight: 600;
+    }
+
+    .math sub,
+    .math sup {
+      font-style: normal;
+      font-size: 0.76em;
+    }
+
+    .vec {
+      position: relative;
+      display: inline-block;
+      font-family: "Cambria Math", "Times New Roman", Times, serif;
+      font-style: italic;
+      font-weight: 700;
+      padding-top: 2px;
+    }
+
+    .vec::after {
+      content: "→";
+      position: absolute;
+      top: -0.58em;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 0.72em;
+      font-style: normal;
+      font-weight: 700;
+      line-height: 1;
+    }
+
+    .frac {
+      display: inline-flex;
+      flex-direction: column;
+      vertical-align: middle;
+      text-align: center;
+      padding: 0 3px;
+      font-family: "Cambria Math", "Times New Roman", Times, serif;
+      font-style: normal;
+      font-size: 0.95em;
+    }
+
+    .frac > span:first-child {
+      border-bottom: 1.5px solid currentColor;
+      padding: 0 3px 1px;
+    }
+
+    .frac > span:last-child {
+      padding: 1px 3px 0;
+    }
+
+    .sqrt {
+      display: inline-flex;
+      align-items: baseline;
+      font-style: normal;
+      vertical-align: baseline;
+    }
+
+    .sqrt::before {
+      content: "√";
+      font-size: 1.05em;
+      line-height: 1;
+      margin-right: 0.5px;
+    }
+
+    .sqrt > span {
+      border-top: 1.4px solid currentColor;
+      padding: 0 2px;
+      line-height: 1.1;
+    }
+
+    /* LEVEL COMPLETION CALLOUT */
+    .round-summary {
+      margin-top: 20px;
+      background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%);
+      border: 2px solid #60a5fa;
+      border-radius: var(--radius);
+      padding: 18px 20px;
+      text-align: center;
+      display: none;
+    }
+
+    .round-summary.show {
+      display: block;
+    }
+
+    .round-summary h3 {
+      font-size: 1.2rem;
+      color: #1e3a8a;
+      margin-bottom: 6px;
+    }
+
+    .round-summary p {
+      color: #1e293b;
+      margin-bottom: 14px;
+      font-size: 0.95rem;
+    }
+
+    .round-actions {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    /* MODAL REPORT */
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(15, 23, 42, 0.6);
+      z-index: 900;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+    }
+
+    .modal-backdrop.show {
+      display: flex;
+    }
+
+    .modal-card {
+      background: var(--card);
+      border-radius: 16px;
+      max-width: 620px;
+      width: 100%;
+      max-height: 90vh;
+      overflow-y: auto;
+      padding: 22px 24px;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.25);
+      border: 2px solid #93c5fd;
+    }
+
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1.5px solid var(--border);
+      padding-bottom: 12px;
+      margin-bottom: 14px;
+    }
+
+    .modal-header h2 {
+      font-size: 1.22rem;
+      color: #1e3a8a;
+    }
+
+    .btn-close {
+      background: #f1f5f9;
+      border: none;
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      font-size: 1.1rem;
+      font-weight: 800;
+      cursor: pointer;
+    }
+
+    .report-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 12px 0;
+      font-size: 0.92rem;
+    }
+
+    .report-table th,
+    .report-table td {
+      border: 1px solid var(--border);
+      padding: 9px 12px;
+      text-align: left;
+    }
+
+    .report-table th {
+      background: #f1f5f9;
+      font-weight: 700;
+    }
+
+    .history-list {
+      max-height: 150px;
+      overflow-y: auto;
+      background: #f8fafc;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 10px 12px;
+      font-size: 0.84rem;
+      margin-top: 8px;
+    }
+
+    .history-item {
+      padding: 4px 0;
+      border-bottom: 1px dashed #e2e8f0;
+    }
+
+    .history-item:last-child {
+      border-bottom: none;
+    }
+
+    .modal-footer {
+      display: flex;
+      justify-content: flex-end;
+      gap: 10px;
+      margin-top: 16px;
+      flex-wrap: wrap;
+    }
+  </style>
+</head>
+<body>
+  <div id="soundToast" class="sound-toast"></div>
+
+  <div class="container">
+    <!-- HEADER -->
+    <header class="app-header">
+      <div class="header-title">
+        <h1>💧 CHỦ ĐỀ 34: KHỐI LƯỢNG RIÊNG &amp; ÁP SUẤT CHẤT LỎNG – VẬT LÍ 10</h1>
+        <p>App luyện tập tương tác • Đảo câu hỏi &amp; đáp án ngẫu nhiên • Chấm đúng/sai tức thì</p>
+      </div>
+      <div class="header-badges">
+        <span class="badge">🎯 Cấp độ 1: 12 câu (Bắt buộc 3 lần 12/12)</span>
+        <span class="badge">🚀 Cấp độ 2 (7–8đ): 5 câu</span>
+        <span class="badge">🏆 Cấp độ 3 (9–10đ): 5 câu</span>
+      </div>
+    </header>
+
+    <!-- 3 NÚT / Ô CHỨC NĂNG RÕ RÀNG -->
+    <section class="controls-panel" aria-label="Bảng điều khiển học sinh">
+      <!-- 1. Ô nhập họ tên, lớp -->
+      <div class="control-box">
+        <div class="control-label">👤 1. Ô NHẬP HỌ TÊN &amp; LỚP HỌC SINH</div>
+        <div class="student-inputs">
+          <input type="text" id="studentName" placeholder="Nhập họ và tên học sinh..." autocomplete="name" />
+          <input type="text" id="studentClass" placeholder="Lớp (VD: 10A1)" />
+        </div>
+      </div>
+
+      <!-- 2. Nút âm thanh xác nhận Đúng/Sai vui nhộn, bất ngờ -->
+      <div class="control-box">
+        <div class="control-label">
+          <span>🔊 2. ÂM THANH ĐÚNG/SAI (VUI NHỘN, BẤT NGỜ)</span>
+        </div>
+        <div style="display:flex; gap:8px; align-items:center;">
+          <button type="button" id="btnToggleSound" class="btn-action btn-sound">
+            <span id="soundIcon">🔊</span>
+            <span id="soundText">Âm thanh: BẬT (Vui nhộn)</span>
+          </button>
+          <button type="button" id="btnTestSound" class="btn-sound-test" title="Nghe thử hiệu ứng âm thanh bất ngờ">
+            🎵 Thử
+          </button>
+        </div>
+      </div>
+
+      <!-- 3. Nút báo họ tên, kết quả thực hiện -->
+      <div class="control-box">
+        <div class="control-label">📊 3. BÁO CÁO KẾT QUẢ THỰC HIỆN</div>
+        <button type="button" id="btnShowReport" class="btn-action btn-report">
+          📋 Báo Họ Tên &amp; Kết Quả Thực Hiện
+        </button>
+      </div>
+    </section>
+
+    <!-- THANH TIẾN ĐỘ MỞ KHÓA CẤP ĐỘ 1 (BẮT BUỘC 3 LẦN ĐÚNG 12/12, KHÔNG CÓ NÚT MỞ KHÓA GV) -->
+    <section class="unlock-banner">
+      <div class="unlock-info">
+        <div class="unlock-title" id="unlockTitle">
+          🔒 Yêu cầu bắt buộc: Hoàn thành đúng 12/12 câu Cấp độ 1 đủ 3 lần mới mở khóa Cấp độ 2 &amp; 3!
+        </div>
+        <div class="unlock-subtitle" id="unlockSubtitle">
+          Học sinh phải tự làm hết 12 câu Cấp độ 1 và đạt tuyệt đối 12/12 câu đúng trong 3 lượt làm bài (mỗi lượt đảo câu hỏi &amp; đáp án ngẫu nhiên).
+        </div>
+      </div>
+      <div class="stars-box" id="starsBox">
+        <span class="star-pill" id="star1">⭐ Lần 1: Chưa đạt</span>
+        <span class="star-pill" id="star2">⭐ Lần 2: Chưa đạt</span>
+        <span class="star-pill" id="star3">⭐ Lần 3: Chưa đạt</span>
+        <div class="teacher-unlock-box" style="display:inline-flex;align-items:center;gap:6px;margin-left:6px;background:#fff7ed;border:1.5px solid #fdba74;padding:4px 10px;border-radius:999px;">
+          <span style="font-size:0.78rem;font-weight:800;color:#9a3412;">👩‍🏫 GV:</span>
+          <input type="password" id="teacherCodeInput" placeholder="Mã mở khóa..." style="width:92px;padding:3px 8px;border:1px solid #cbd5e1;border-radius:6px;font-size:0.8rem;" onkeydown="if(event.key==='Enter')handleTeacherUnlock()" />
+          <button type="button" id="btnTeacherUnlock" onclick="handleTeacherUnlock()" style="background:#ea580c;color:#fff;border:none;padding:4px 10px;border-radius:6px;font-size:0.78rem;font-weight:800;cursor:pointer;">Mở khóa CĐ 2,3</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- CHỌN CẤP ĐỘ -->
+    <nav class="level-tabs" aria-label="Các cấp độ bài tập">
+      <button type="button" class="level-tab active" id="tabLevel1" onclick="selectLevel(1)">
+        <div class="level-tab-top">
+          <span class="level-name">🟢 CẤP ĐỘ 1 (Nền tảng)</span>
+          <span class="level-status-badge" id="badgeLevel1">Đang mở • 12 câu</span>
+        </div>
+        <div class="level-desc">Khối lượng riêng <span class="math">&rho; = m/V</span>, áp suất <span class="math">p = F<sub>N</sub>/S</span>, áp suất chất lỏng <span class="math">p = p<sub>a</sub> + &rho;gh</span> (Bắt buộc 3 lần 12/12)</div>
+      </button>
+
+      <button type="button" class="level-tab locked" id="tabLevel2" onclick="selectLevel(2)">
+        <div class="level-tab-top">
+          <span class="level-name">🟡 CẤP ĐỘ 2 (Mức 7–8 điểm)</span>
+          <span class="level-status-badge" id="badgeLevel2">🔒 Khóa • 5 câu</span>
+        </div>
+        <div class="level-desc">Áp suất tại điểm cách đáy bể, bình thông nhau, máy nén thủy lực Pascal, cân Robecvan</div>
+      </button>
+
+      <button type="button" class="level-tab locked" id="tabLevel3" onclick="selectLevel(3)">
+        <div class="level-tab-top">
+          <span class="level-name">🔴 CẤP ĐỘ 3 (Mức 9–10 điểm)</span>
+          <span class="level-status-badge" id="badgeLevel3">🔒 Khóa • 5 câu</span>
+        </div>
+        <div class="level-desc">Vận dụng cao: Áp suất max/min của khối hộp, lực đẩy Archimedes trong bình tràn, gạch 2 lỗ rỗng</div>
+      </button>
+    </nav>
+
+    <!-- THANH THỐNG KÊ CẤP ĐỘ HIỆN TẠI -->
+    <div class="level-toolbar">
+      <div class="level-stats">
+        <div class="stat-item">Đang làm: <span id="statCurrentLevel">Cấp độ 1</span></div>
+        <div class="stat-item">Đã làm: <span id="statProgress">0 / 12</span> câu</div>
+        <div class="stat-item">Số câu đúng: <span id="statCorrect">0</span></div>
+        <div class="stat-item">Lượt làm CĐ1 thứ: <span id="statAttempt">1</span></div>
+      </div>
+      <button type="button" class="btn-shuffle" onclick="restartCurrentLevel()">
+        🔄 Làm lại &amp; Đảo câu hỏi / đáp án
+      </button>
+    </div>
+
+    <!-- DANH SÁCH CÂU HỎI -->
+    <main id="questionsContainer" class="questions-list"></main>
+
+    <!-- TỔNG KẾT LƯỢT LÀM -->
+    <div id="roundSummary" class="round-summary">
+      <h3 id="summaryTitle">Hoàn thành lượt làm bài!</h3>
+      <p id="summaryText"></p>
+      <div class="round-actions">
+        <button type="button" class="btn-shuffle" onclick="restartCurrentLevel()">
+          🔄 Làm lại cấp độ này (Đảo đề mới)
+        </button>
+        <button type="button" id="btnNextLevel" class="btn-shuffle" style="background:#16a34a; display:none;" onclick="goNextUnlockedLevel()">
+          🚀 Chuyển sang Cấp độ tiếp theo
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL BÁO HỌ TÊN & KẾT QUẢ THỰC HIỆN -->
+  <div id="reportModal" class="modal-backdrop" role="dialog" aria-modal="true">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h2>📋 PHIẾU BÁO HỌ TÊN &amp; KẾT QUẢ THỰC HIỆN</h2>
+        <button type="button" class="btn-close" onclick="closeReportModal()">✕</button>
+      </div>
+      <div id="reportBody"></div>
+      <div class="modal-footer">
+        <button type="button" class="btn-shuffle" style="background:#059669;" onclick="copyReportText()">
+          📋 Sao chép kết quả gửi Giáo viên
+        </button>
+        <button type="button" class="btn-shuffle" style="background:#475569;" onclick="closeReportModal()">
+          Đóng
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // =========================================================================
+    // 1. HỆ THỐNG ÂM THANH WEB AUDIO API "VUI NHỘN, BẤT NGỜ"
+    // =========================================================================
+    let soundEnabled = true;
+    let audioCtx = null;
+
+    const FUNNY_CORRECT_MESSAGES = [
+      "🎉 Chuẩn đét! Động năng tri thức đang tăng vọt!",
+      "🚀 Tuyệt vời! Nhớ bài siêu chắc luôn!",
+      "🌟 Bất ngờ chưa! Một pha áp dụng công thức 10 điểm!",
+      "🏆 Quá xuất sắc! Không một chút sai sót!",
+      "⚡ Năng lượng tích cực đạt cực đại! Tiếp tục phát huy nhé!",
+      "🎯 Bách phát bách trúng! Thầy/cô rất tự hào về em!"
+    ];
+
+    const FUNNY_WRONG_MESSAGES = [
+      "🙊 Ối dồi ôi! Nhầm công thức tí xíu rồi, xem giải thích ngay nhé!",
+      "🐸 Úi chà! Cẩn thận hệ số 1/2 hoặc đơn vị chuẩn SI nha!",
+      "💡 Suýt đúng! Đọc kĩ lời giải bên dưới để gỡ lại ở lượt sau nhé!",
+      "🎢 Cú trượt bất ngờ! Xem lại hướng dẫn giải để nhớ thật lâu nào!",
+      "🔧 Chưa chính xác rồi! Bình tĩnh đọc công thức bên dưới nha!"
+    ];
+
+    function getAudioContext() {
+      if (!audioCtx) {
+        const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+        if (AudioContextClass) {
+          audioCtx = new AudioContextClass();
+        }
+      }
+      if (audioCtx && audioCtx.state === "suspended") {
+        audioCtx.resume();
+      }
+      return audioCtx;
+    }
+
+    function playTone(freq, type, startTime, duration, vol = 0.18, slideTo = null) {
+      const ctx = getAudioContext();
+      if (!ctx) return;
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+      osc.type = type;
+      osc.frequency.setValueAtTime(freq, startTime);
+      if (slideTo) {
+        osc.frequency.exponentialRampToValueAtTime(slideTo, startTime + duration);
+      }
+      gain.gain.setValueAtTime(0.001, startTime);
+      gain.gain.linearRampToValueAtTime(vol, startTime + 0.02);
+      gain.gain.exponentialRampToValueAtTime(0.001, startTime + duration);
+      osc.connect(gain);
+      gain.connect(ctx.destination);
+      osc.start(startTime);
+      osc.stop(startTime + duration);
+    }
+
+    function playFunnySound(isCorrect) {
+      const msgList = isCorrect ? FUNNY_CORRECT_MESSAGES : FUNNY_WRONG_MESSAGES;
+      const randomMsg = msgList[Math.floor(Math.random() * msgList.length)];
+      showSoundToast(randomMsg, isCorrect);
+
+      if (!soundEnabled) return;
+      const ctx = getAudioContext();
+      if (!ctx) return;
+      const now = ctx.currentTime;
+
+      if (isCorrect) {
+        const style = Math.floor(Math.random() * 3);
+        if (style === 0) {
+          playTone(523.25, "triangle", now, 0.09, 0.22);
+          playTone(659.25, "triangle", now + 0.09, 0.09, 0.22);
+          playTone(783.99, "triangle", now + 0.18, 0.09, 0.22);
+          playTone(1046.5, "sine", now + 0.27, 0.28, 0.26);
+        } else if (style === 1) {
+          playTone(330, "sine", now, 0.2, 0.2, 990);
+          playTone(987.77, "triangle", now + 0.21, 0.08, 0.22);
+          playTone(1318.5, "sine", now + 0.29, 0.26, 0.25);
+        } else {
+          const notes = [440, 554.37, 659.25, 880, 1108.73];
+          notes.forEach((n, idx) => {
+            playTone(n, "square", now + idx * 0.065, 0.09, 0.12);
+          });
+        }
+      } else {
+        const style = Math.floor(Math.random() * 3);
+        if (style === 0) {
+          playTone(392.0, "sawtooth", now, 0.16, 0.14, 370.0);
+          playTone(369.99, "sawtooth", now + 0.17, 0.16, 0.14, 349.23);
+          playTone(349.23, "sawtooth", now + 0.34, 0.32, 0.16, 261.63);
+        } else if (style === 1) {
+          playTone(180, "sine", now, 0.18, 0.24, 520);
+          playTone(520, "sine", now + 0.18, 0.24, 0.2, 150);
+        } else {
+          playTone(220, "triangle", now, 0.15, 0.2, 160);
+          playTone(160, "sawtooth", now + 0.16, 0.26, 0.16, 110);
+        }
+      }
+    }
+
+    function playUnlockFanfare() {
+      if (!soundEnabled) return;
+      const ctx = getAudioContext();
+      if (!ctx) return;
+      const now = ctx.currentTime;
+      const melody = [523.25, 659.25, 783.99, 1046.5, 783.99, 1046.5];
+      const durs = [0.1, 0.1, 0.1, 0.18, 0.1, 0.35];
+      let t = now;
+      melody.forEach((f, i) => {
+        playTone(f, "triangle", t, durs[i], 0.25);
+        t += durs[i] + 0.02;
+      });
+    }
+
+    let toastTimer = null;
+    function showSoundToast(message, isCorrect) {
+      const toast = document.getElementById("soundToast");
+      toast.textContent = message;
+      toast.className = "sound-toast show " + (isCorrect ? "correct" : "wrong");
+      if (toastTimer) clearTimeout(toastTimer);
+      toastTimer = setTimeout(() => {
+        toast.classList.remove("show");
+      }, 2600);
+    }
+
+    document.getElementById("btnToggleSound").addEventListener("click", () => {
+      soundEnabled = !soundEnabled;
+      const btn = document.getElementById("btnToggleSound");
+      const icon = document.getElementById("soundIcon");
+      const text = document.getElementById("soundText");
+      if (soundEnabled) {
+        btn.classList.remove("muted");
+        icon.textContent = "🔊";
+        text.textContent = "Âm thanh: BẬT (Vui nhộn)";
+        playFunnySound(true);
+      } else {
+        btn.classList.add("muted");
+        icon.textContent = "🔇";
+        text.textContent = "Âm thanh: TẮT";
+      }
+    });
+
+    document.getElementById("btnTestSound").addEventListener("click", () => {
+      soundEnabled = true;
+      const btn = document.getElementById("btnToggleSound");
+      btn.classList.remove("muted");
+      document.getElementById("soundIcon").textContent = "🔊";
+      document.getElementById("soundText").textContent = "Âm thanh: BẬT (Vui nhộn)";
+      playFunnySound(Math.random() > 0.35);
+    });
+
+    // =========================================================================
+    // 2. NGÂN HÀNG CÂU HỎI CHỦ ĐỀ 25 - ĐỘNG NĂNG, THẾ NĂNG (BÁM SÁT FILE CH25)
+    // =========================================================================
+    const QUESTIONS_DB = {
+      "1": [
+            {
+                  "id": "L1_01",
+                  "tag": "Cấp độ 1 • Nhận biết & Thông hiểu",
+                  "question": "Khối lượng riêng <span class=\"math\">ρ</span> của một chất được định nghĩa là khối lượng của một đơn vị thể tích chất đó. Công thức tính khối lượng riêng và đơn vị chuẩn trong hệ SI là",
+                  "svg": "<svg viewBox=\"0 0 500 220\" xmlns=\"http://www.w3.org/2000/svg\">\n      <defs>\n        <marker id=\"arrB\" markerWidth=\"8\" markerHeight=\"8\" refX=\"6\" refY=\"4\" orient=\"auto\"><path d=\"M0,0 L8,4 L0,8 Z\" fill=\"#1d4ed8\"/></marker>\n        <marker id=\"arrR\" markerWidth=\"8\" markerHeight=\"8\" refX=\"6\" refY=\"4\" orient=\"auto\"><path d=\"M0,0 L8,4 L0,8 Z\" fill=\"#dc2626\"/></marker>\n        <marker id=\"arrG\" markerWidth=\"8\" markerHeight=\"8\" refX=\"6\" refY=\"4\" orient=\"auto\"><path d=\"M0,0 L8,4 L0,8 Z\" fill=\"#16a34a\"/></marker>\n        <marker id=\"arrP\" markerWidth=\"8\" markerHeight=\"8\" refX=\"6\" refY=\"4\" orient=\"auto\"><path d=\"M0,0 L8,4 L0,8 Z\" fill=\"#7c3aed\"/></marker>\n      </defs>\n      <rect width=\"500\" height=\"220\" rx=\"12\" fill=\"#f8fafc\" stroke=\"#e2e8f0\"/>\n      <text x=\"250\" y=\"22\" text-anchor=\"middle\" font-size=\"13\" font-weight=\"bold\" fill=\"#0f172a\">KHÁI NIỆM VÀ CÔNG THỨC KHỐI LƯỢNG RIÊNG ρ</text>\n      \n      <line x1=\"45\" y1=\"148\" x2=\"215\" y2=\"148\" stroke=\"#334155\" stroke-width=\"3.5\"/>\n      <rect x=\"85\" y=\"88\" width=\"90\" height=\"60\" rx=\"4\" fill=\"#fde047\" stroke=\"#ca8a04\" stroke-width=\"2.2\"/>\n      <text x=\"130\" y=\"114\" text-anchor=\"middle\" font-size=\"11.5\" font-weight=\"bold\" fill=\"#713f12\">m , V</text>\n      <line x1=\"130\" y1=\"118\" x2=\"130\" y2=\"168\" stroke=\"#dc2626\" stroke-width=\"2.8\" marker-end=\"url(#arrR)\"/>\n      <text x=\"144\" y=\"166\" font-size=\"11.5\" font-weight=\"bold\" fill=\"#dc2626\">P = m·g</text>\n      <text x=\"80\" y=\"164\" font-size=\"11\" font-weight=\"bold\" fill=\"#1d4ed8\">V (m³)</text>\n      <rect x=\"228\" y=\"48\" width=\"242\" height=\"114\" rx=\"8\" fill=\"#ffffff\" stroke=\"#cbd5e1\"/>\n      <text x=\"349\" y=\"76\" text-anchor=\"middle\" font-size=\"12\" font-weight=\"bold\" fill=\"#1e3a8a\">Khối lượng riêng: ρ = m / V  (kg/m³)</text>\n      <text x=\"349\" y=\"108\" text-anchor=\"middle\" font-size=\"12\" font-weight=\"bold\" fill=\"#dc2626\">Trọng lượng riêng: d = P / V = ρ · g  (N/m³)</text>\n      <text x=\"349\" y=\"140\" text-anchor=\"middle\" font-size=\"12.5\" font-weight=\"bold\" fill=\"#16a34a\">Quy đổi: 1 g/cm³ = 1000 kg/m³</text>\n    \n      <rect x=\"30\" y=\"182\" width=\"440\" height=\"28\" rx=\"6\" fill=\"#eff6ff\" stroke=\"#bfdbfe\"/>\n      <text x=\"250\" y=\"201\" text-anchor=\"middle\" font-size=\"12.5\" font-weight=\"bold\" fill=\"#1e3a8a\">Công thức chuẩn: ρ = m / V (kg/m³)   và   d = ρ · g (N/m³)</text>\n    </svg>",
+                  "options": [
+                        "<span class=\"math\">ρ = <span class=\"frac\"><span class=\"num\">m</span><span class=\"den\">V</span></span></span>, đơn vị là <span class=\"math\">kg/m<sup>3</sup></span>.",
+                        "<span class=\"math\">ρ = m · V</span>, đơn vị là <span class=\"math\">kg · m<sup>3</sup></span>.",
+                        "<span class=\"math\">ρ = <span class=\"frac\"><span class=\"num\">V</span><span class=\"den\">m</span></span></span>, đơn vị là <span class=\"math\">m<sup>3</sup>/kg</span>.",
+                        "<span class=\"math\">ρ = <span class=\"frac\"><span class=\"num\">P</span><span class=\"den\">V</span></span></span>, đơn vị là <span class=\"math\">N/m<sup>3</sup></span>."
+                  ],
+                  "correctIndex": 0,
+                  "explanation": "Khối lượng riêng của một chất bằng thương số giữa khối lượng <span class=\"math\">m</span> (<span class=\"math\">kg</span>) và thể tích <span class=\"math\">V</span> (<span class=\"math\">m<sup>3</sup></span>): <span class=\"math\">ρ = <span class=\"frac\"><span class=\"num\">m</span><span class=\"den\">V</span></span></span>, có đơn vị chuẩn là <span class=\"math\">kg/m<sup>3</sup></span> (hoặc <span class=\"math\">g/cm<sup>3</sup></span>)."
+            },
+            {
+                  "id": "L1_02",
+                  "tag": "Cấp độ 1 • Nhận biết & Thông hiểu",
+                  "question": "Muốn đo khối lượng riêng của một quả cầu nhỏ bằng sắt đặc trong phòng thí nghiệm, ta cần sử dụng bộ dụng cụ nào sau đây?",
+                  "svg": "<svg viewBox=\"0 0 500 220\" xmlns=\"http://www.w3.org/2000/svg\">\n      <defs>\n        <marker id=\"arrB\" markerWidth=\"8\" markerHeight=\"8\" refX=\"6\" refY=\"4\" orient=\"auto\"><path d=\"M0,0 L8,4 L0,8 Z\" fill=\"#1d4ed8\"/></marker>\n        <marker id=\"arrR\" markerWidth=\"8\" markerHeight=\"8\" refX=\"6\" refY=\"4\" orient=\"auto\"><path d=\"M0,0 L8,4 L0,8 Z\" fill=\"#dc2626\"/></marker>\n        <marker id=\"arrG\" markerWidth=\"8\" markerHeight=\"8\" refX=\"6\" refY=\"4\" orient=\"auto\"><path d=\"M0,0 L8,4 L0,8 Z\" fill=\"#16a34a\"/></marker>\n        <marker id=\"arrP\" markerWidth=\"8\" markerHeight=\"8\" refX=\"6\" refY=\"4\" orient=\"auto\"><path d=\"M0,0 L8,4 L0,8 Z\" fill=\"#7c3aed\"/></marker>\n      </defs>\n      <rect width=\"500\" height=\"220\" rx=\"12\" fill=\"#f8fafc\" stroke=\"#e2e8f0\"/>\n      <text x=\"250\" y=\"22\" text-anchor=\"middle\" font-size=\"13\" font-weight=\"bold\" fill=\"#0f172a\">ĐO KHỐI LƯỢNG RIÊNG BẰNG CÂN VÀ BÌNH CHIA ĐỘ</text>\n      \n      <rect x=\"70\" y=\"62\" width=\"110\" height=\"106\" fill=\"#dbeafe\" fill-opacity=\"0.75\" stroke=\"none\"/>\n      <polyline points=\"70,42 70,168 180,168 180,42\" fill=\"none\" stroke=\"#1e3a8a\" stroke-width=\"3\"/>\n      <line x1=\"70\" y1=\"62\" x2=\"180\" y2=\"62\" stroke=\"#2563eb\" stroke-width=\"2\" stroke-dasharray=\"5,3\"/>\n      <rect x=\"103\" y=\"92\" width=\"44\" height=\"44\" rx=\"5\" fill=\"#f59e0b\" stroke=\"#b45309\" stroke-width=\"2\"/>\n      <text x=\"125\" y=\"118\" text-anchor=\"middle\" font-size=\"11\" font-weight=\"bold\" fill=\"#0f172a\">Quả cầu V</text>\n      <line x1=\"125\" y1=\"92\" x2=\"125\" y2=\"52\" stroke=\"#16a34a\" stroke-width=\"2.6\" marker-end=\"url(#arrG)\"/>\n      <text x=\"136\" y=\"58\" font-size=\"11.5\" font-weight=\"bold\" fill=\"#16a34a\">ΔV nước</text>\n      <line x1=\"125\" y1=\"136\" x2=\"125\" y2=\"165\" stroke=\"#dc2626\" stroke-width=\"2.6\" marker-end=\"url(#arrR)\"/>\n      <text x=\"136\" y=\"162\" font-size=\"11.5\" font-weight=\"bold\" fill=\"#dc2626\">m (kg)</text>\n      <rect x=\"225\" y=\"48\" width=\"245\" height=\"114\" rx=\"8\" fill=\"#ffffff\" stroke=\"#cbd5e1\"/>\n      <text x=\"347\" y=\"76\" text-anchor=\"middle\" font-size=\"12\" font-weight=\"bold\" fill=\"#1e3a8a\">Bước 1: Dùng cân đo khối lượng m của quả cầu</text>\n      <text x=\"347\" y=\"108\" text-anchor=\"middle\" font-size=\"12\" font-weight=\"bold\" fill=\"#dc2626\">Bước 2: Thả chìm vào bình chia độ đo thể tích V</text>\n      <text x=\"347\" y=\"140\" text-anchor=\"middle\" font-size=\"12.5\" font-weight=\"bold\" fill=\"#16a34a\">Bước 3: Tính khối lượng riêng ρ = m / V</text>\n    \n      <rect x=\"30\" y=\"182\" width=\"440\" height=\"28\" rx=\"6\" fill=\"#eff6ff\" stroke=\"#bfdbfe\"/>\n      <text x=\"250\" y=\"201\" text-anchor=\"middle\" font-size=\"12.5\" font-weight=\"bold\" fill=\"#1e3a8a\">Dụng cụ cần thiết: Cân đồng hồ / cân điện tử + Bình chia độ</text>\n    </svg>",
+                  "options": [
+                        "Một cái cân (để đo khối lượng) và một bình chia độ chứa nước (để đo thể tích).",
+                        "Chỉ cần một chiếc thước kẻ thẳng.",
+                        "Chỉ cần một chiếc lực kế lò xo.",
+                        "Chỉ cần một chiếc bình chia độ."
+                  ],
+                  "correctIndex": 0,
+                  "explanation": "Vì <span class=\"math\">ρ = <span class=\"frac\"><span class=\"num\">m</span><span class=\"den\">V</span></span></span>, ta cần dùng cân để đo khối lượng <span class=\"math\">m</span> của quả cầu sắt và dùng bình chia độ chứa nước (đo phần thể tích nước dâng lên) để xác định thể tích <span class=\"math\">V</span> của quả cầu."
+            },
+            {
+                  "id": "L1_03",
+                  "tag": "Cấp độ 1 • Nhận biết & Thông hiểu",
+                  "question": "Gọi <span class=\"math\">F<sub>N</sub></span> là độ lớn áp lực tác dụng vuông góc lên mặt bị ép có diện tích <span class=\"math\">S</span>. Công thức tính áp suất <span class=\"math\">p</span> và đơn vị đo áp suất là",
+                  "svg": "<svg viewBox=\"0 0 500 220\" xmlns=\"http://www.w3.org/2000/svg\">\n      <defs>\n        <marker id=\"arrB\" markerWidth=\"8\" markerHeight=\"8\" refX=\"6\" refY=\"4\" orient=\"auto\"><path d=\"M0,0 L8,4 L0,8 Z\" fill=\"#1d4ed8\"/></marker>\n        <marker id=\"arrR\" markerWidth=\"8\" markerHeight=\"8\" refX=\"6\" refY=\"4\" orient=\"auto\"><path d=\"M0,0 L8,4 L0,8 Z\" fill=\"#dc2626\"/></marker>\n        <marker id=\"arrG\" markerWidth=\"8\" markerHeight=\"8\" refX=\"6\" refY=\"4\" orient=\"auto\"><path d=\"M0,0 L8,4 L0,8 Z\" fill=\"#16a34a\"/></marker>\n        <marker id=\"arrP\" markerWidth=\"8\" markerHeight=\"8\" refX=\"6\" refY=\"4\" orient=\"auto\"><path d=\"M0,0 L8,4 L0,8 Z\" fill=\"#7c3aed\"/></marker>\n      </defs>\n      <rect width=\"500\" height=\"220\" rx=\"12\" fill=\"#f8fafc\" stroke=\"#e2e8f0\"/>\n      <text x=\"250\" y=\"22\" text-anchor=\"middle\" font-size=\"13\" font-weight=\"bold\" fill=\"#0f172a\">ÁP LỰC F<tspan baseline-shift=\"sub\" font-size=\"78%\">N</tspan> VÀ ÁP SUẤT p TRÊN MẶT BỊ ÉP</text>\n      \n      <line x1=\"45\" y1=\"148\" x2=\"215\" y2=\"148\" stroke=\"#334155\" stroke-width=\"3.5\"/>\n      <rect x=\"85\" y=\"88\" width=\"90\" height=\"60\" rx=\"4\" fill=\"#fde047\" stroke=\"#ca8a04\" stroke-width=\"2.2\"/>\n      <text x=\"130\" y=\"114\" text-anchor=\"middle\" font-size=\"11.5\" font-weight=\"bold\" fill=\"#713f12\">Vật nặng</text>\n      <line x1=\"130\" y1=\"118\" x2=\"130\" y2=\"168\" stroke=\"#dc2626\" stroke-width=\"2.8\" marker-end=\"url(#arrR)\"/>\n      <text x=\"144\" y=\"166\" font-size=\"11.5\" font-weight=\"bold\" fill=\"#dc2626\">F<tspan baseline-shift=\"sub\" font-size=\"78%\">N</tspan></text>\n      <text x=\"80\" y=\"164\" font-size=\"11\" font-weight=\"bold\" fill=\"#1d4ed8\">Diện tích S</text>\n      <rect x=\"228\" y=\"48\" width=\"242\" height=\"114\" rx=\"8\" fill=\"#ffffff\" stroke=\"#cbd5e1\"/>\n      <text x=\"349\" y=\"76\" text-anchor=\"middle\" font-size=\"12\" font-weight=\"bold\" fill=\"#1e3a8a\">Áp lực F<tspan baseline-shift=\"sub\" font-size=\"78%\">N</tspan>: Lực ép vuông góc với mặt tiếp xúc</text>\n      <text x=\"349\" y=\"108\" text-anchor=\"middle\" font-size=\"12\" font-weight=\"bold\" fill=\"#dc2626\">Áp suất: p = F<tspan baseline-shift=\"sub\" font-size=\"78%\">N</tspan> / S</text>\n      <text x=\"349\" y=\"140\" text-anchor=\"middle\" font-size=\"12.5\" font-weight=\"bold\" fill=\"#16a34a\">Đơn vị: 1 Pa = 1 N/m²</text>\n    \n      <rect x=\"30\" y=\"182\" width=\"440\" height=\"28\" rx=\"6\" fill=\"#eff6ff\" stroke=\"#bfdbfe\"/>\n      <text x=\"250\" y=\"201\" text-anchor=\"middle\" font-size=\"12.5\" font-weight=\"bold\" fill=\"#1e3a8a\">Công thức áp suất: p = F<tspan baseline-shift=\"sub\" font-size=\"78%\">N</tspan> / S   (1 Pa = 1 N/m²)</text>\n    </svg>",
+                  "options": [
+                        "<span class=\"math\">p = <span class=\"frac\"><span class=\"num\">F<sub>N</sub></span><span class=\"den\">S</span></span></span>, đơn vị là <span class=\"math\">Pa</span> (<span class=\"math\">1 Pa = 1 N/m<sup>2</sup></span>).",
+                        "<span class=\"math\">p = F<sub>N</sub> · S</span>, đơn vị là <span class=\"math\">N · m<sup>2</sup></span>.",
+                        "<span class=\"math\">p = <span class=\"frac\"><span class=\"num\">S</span><span class=\"den\">F<sub>N</sub></span></span></span>, đơn vị là <span class=\"math\">m<sup>2</sup>/N</span>.",
+                        "<span class=\"math\">p = <span class=\"frac\"><span class=\"num\">F<sub>N</sub></span><span class=\"den\">V</span></span></span>, đơn vị là <span class=\"math\">kg/m<sup>3</sup></span>."
+                  ],
+                  "correctIndex": 0,
+                  "explanation": "Áp suất được tính bằng độ lớn của áp lực trên một đơn vị diện tích mặt bị ép: <span class=\"math\">p = <span class=\"frac\"><span class=\"num\">F<sub>N</sub></span><span class=\"den\">S</span></span></span>. Đơn vị áp suất trong hệ SI là па-xcan (<span class=\"math\">Pa</span>), với <span class=\"math\">1 Pa = 1 N/m<sup>2</sup></span>."
+            },
+            {
+                  "id": "L1_04",
+                  "tag": "Cấp độ 1 • Nhận biết & Thông hiểu",
+                  "question": "Đơn vị nào dưới đây KHÔNG phải là đơn vị đo áp suất?",
+                  "svg": "<svg viewBox=\"0 0 500 220\" xmlns=\"http://www.w3.org/2000/svg\">\n      <defs>\n        <marker id=\"arrB\" markerWidth=\"8\" markerHeight=\"8\" refX=\"6\" refY=\"4\" orient=\"auto\"><path d=\"M0,0 L8,4 L0,8 Z\" fill=\"#1d4ed8\"/></marker>\n        <marker id=\"arrR\" markerWidth=\"8\" markerHeight=\"8\" refX=\"6\" refY=\"4\" orient=\"auto\"><path d=\"M0,0 L8,4 L0,8 Z\" fill=\"#dc2626\"/></marker>\n        <marker id=\"arrG\" markerWidth=\"8\" markerHeight=\"8\" refX=\"6\" refY=\"4\" orient=\"auto\"><path d=\"M0,0 L8,4 L0,8 Z\" fill=\"#16a34a\"/></marker>\n        <marker id=\"arrP\" markerWidth=\"8\" markerHeight=\"8\" refX=\"6\" refY=\"4\" orient=\"auto\"><path d=\"M0,0 L8,4 L0,8 Z\" fill=\"#7c3aed\"/></marker>\n      </defs>\n      <rect width=\"500\" height=\"220\" rx=\"12\" fill=\"#f8fafc\" stroke=\"#e2e8f0\"/>\n      <text x=\"250\" y=\"22\" text-anchor=\"middle\" font-size=\"13\" font-weight=\"bold\" fill=\"#0f172a\">CÁC ĐƠN VỊ ĐO ÁP SUẤT THƯỜNG GẶP</text>\n      \n      <line x1=\"45\" y1=\"148\" x2=\"215\" y2=\"148\" stroke=\"#334155\" stroke-width=\"3.5\"/>\n      <rect x=\"85\" y=\"88\" width=\"90\" height=\"60\" rx=\"4\" fill=\"#fde047\" stroke=\"#ca8a04\" stroke-width=\"2.2\"/>\n      <text x=\"130\" y=\"114\" text-anchor=\"middle\" font-size=\"11.5\" font-weight=\"bold\" fill=\"#713f12\">Áp suất p</text>\n      <line x1=\"130\" y1=\"118\" x2=\"130\" y2=\"168\" stroke=\"#dc2626\" stroke-width=\"2.8\" marker-end=\"url(#arrR)\"/>\n      <text x=\"144\" y=\"166\" font-size=\"11.5\" font-weight=\"bold\" fill=\"#dc2626\">F<tspan baseline-shift=\"sub\" font-size=\"78%\">N</tspan></text>\n      <text x=\"80\" y=\"164\" font-size=\"11\" font-weight=\"bold\" fill=\"#1d4ed8\">S</text>\n      <rect x=\"228\" y=\"48\" width=\"242\" height=\"114\" rx=\"8\" fill=\"#ffffff\" stroke=\"#cbd5e1\"/>\n      <text x=\"349\" y=\"76\" text-anchor=\"middle\" font-size=\"12\" font-weight=\"bold\" fill=\"#1e3a8a\">Đơn vị SI: Pa (Paxcan) = N/m²</text>\n      <text x=\"349\" y=\"108\" text-anchor=\"middle\" font-size=\"12\" font-weight=\"bold\" fill=\"#dc2626\">Đơn vị thông dụng: atm, mmHg, bar</text>\n      <text x=\"349\" y=\"140\" text-anchor=\"middle\" font-size=\"12.5\" font-weight=\"bold\" fill=\"#16a34a\">Chú ý: kg/m³ là đơn vị của khối lượng riêng ρ!</text>\n    \n      <rect x=\"30\" y=\"182\" width=\"440\" height=\"28\" rx=\"6\" fill=\"#eff6ff\" stroke=\"#bfdbfe\"/>\n      <text x=\"250\" y=\"201\" text-anchor=\"middle\" font-size=\"12.5\" font-weight=\"bold\" fill=\"#1e3a8a\">Đơn vị áp suất: Pa, N/m², atm, mmHg   (kg/m³ là đơn vị khối lượng riêng)</text>\n    </svg>",
+                  "options": [
+                        "<span class=\"math\">kg/m<sup>3</sup></span>",
+                        "<span class=\"math\">Pa</span> (Paxcan)",
+                        "<span class=\"math\">atm</span> (Atmôtphe)",
+                        "<span class=\"math\">mmHg</span> (Milimét thủy ngân)"
+                  ],
+                  "correctIndex": 0,
+                  "explanation": "<span class=\"math\">Pa</span>, <span class=\"math\">N/m<sup>2</sup></span>, <span class=\"math\">atm</span>, <span class=\"math\">mmHg</span> đều là các đơn vị đo áp suất. Còn <span class=\"math\">kg/m<sup>3</sup></span> là đơn vị đo khối lượng riêng."
+            },
+            {
+                  "id": "L1_05",
+                  "tag": "Cấp độ 1 • Nhận biết & Thông hiểu",
+                  "question": "Muốn tăng áp suất tác dụng lên một mặt bị ép, ta cần thực hiện biện pháp nào sau đây?",
+                  "svg": "<svg viewBox=\"0 0 500 220\" xmlns=\"http://www.w3.org/2000/svg\">\n      <defs>\n        <marker id=\"arrB\" markerWidth=\"8\" markerHeight=\"8\" refX=\"6\" refY=\"4\" orient=\"auto\"><path d=\"M0,0 L8,4 L0,8 Z\" fill=\"#1d4ed8\"/></marker>\n        <marker id=\"arrR\" markerWidth=\"8\" markerHeight=\"8\" refX=\"6\" refY=\"4\" orient=\"auto\"><path d=\"M0,0 L8,4 L0,8 Z\" fill=\"#dc2626\"/></marker>\n        <marker id=\"arrG\" markerWidth=\"8\" markerHeight=\"8\" refX=\"6\" refY=\"4\" orient=\"auto\"><path d=\"M0,0 L8,4 L0,8 Z\" fill=\"#16a34a\"/></marker>\n        <marker id=\"arrP\" markerWidth=\"8\" markerHeight=\"8\" refX=\"6\" refY=\"4\" orient=\"auto\"><path d=\"M0,0 L8,4 L0,8 Z\" fill=\"#7c3aed\"/></marker>\n      </defs>\n      <rect width=\"500\" height=\"220\" rx=\"12\" fill=\"#f8fafc\" stroke=\"#e2e8f0\"/>\n      <text x=\"250\" y=\"22\" text-anchor=\"middle\" font-size=\"13\" font-weight=\"bold\" fill=\"#0f172a\">NGUYÊN TẮC LÀM TĂNG HOẶC GIẢM ÁP SUẤT TRONG THỰC TẾ</text>\n      \n      <line x1=\"45\" y1=\"148\" x2=\"215\" y2=\"148\" stroke=\"#334155\" stroke-width=\"3.5\"/>\n      <rect x=\"85\" y=\"88\" width=\"90\" height=\"60\" rx=\"4\" fill=\"#fde047\" stroke=\"#ca8a04\" stroke-width=\"2.2\"/>\n      <text x=\"130\" y=\"114\" text-anchor=\"middle\" font-size=\"11.5\" font-weight=\"bold\" fill=\"#713f12\">p = F<tspan baseline-shift=\"sub\" font-size=\"78%\">N</tspan> / S</text>\n      <line x1=\"130\" y1=\"118\" x2=\"130\" y2=\"168\" stroke=\"#dc2626\" stroke-width=\"2.8\" marker-end=\"url(#arrR)\"/>\n      <text x=\"144\" y=\"166\" font-size=\"11.5\" font-weight=\"bold\" fill=\"#dc2626\">F<tspan baseline-shift=\"sub\" font-size=\"78%\">N</tspan> tăng</text>\n      <text x=\"80\" y=\"164\" font-size=\"11\" font-weight=\"bold\" fill=\"#1d4ed8\">S giảm</text>\n      <rect x=\"228\" y=\"48\" width=\"242\" height=\"114\" rx=\"8\" fill=\"#ffffff\" stroke=\"#cbd5e1\"/>\n      <text x=\"349\" y=\"76\" text-anchor=\"middle\" font-size=\"12\" font-weight=\"bold\" fill=\"#1e3a8a\">Tăng áp suất p: Tăng F<tspan baseline-shift=\"sub\" font-size=\"78%\">N</tspan> và giảm diện tích S</text>\n      <text x=\"349\" y=\"108\" text-anchor=\"middle\" font-size=\"12\" font-weight=\"bold\" fill=\"#dc2626\">Ví dụ tăng p: Lưỡi dao mỏng sắc, mũi kim nhọn</text>\n      <text x=\"349\" y=\"140\" text-anchor=\"middle\" font-size=\"12.5\" font-weight=\"bold\" fill=\"#16a34a\">Ví dụ giảm p: Bản xích xe tăng rộng, móng nhà to</text>\n    \n      <rect x=\"30\" y=\"182\" width=\"440\" height=\"28\" rx=\"6\" fill=\"#eff6ff\" stroke=\"#bfdbfe\"/>\n      <text x=\"250\" y=\"201\" text-anchor=\"middle\" font-size=\"12.5\" font-weight=\"bold\" fill=\"#1e3a8a\">p = F<tspan baseline-shift=\"sub\" font-size=\"78%\">N</tspan> / S  ⟹  F<tspan baseline-shift=\"sub\" font-size=\"78%\">N</tspan> càng lớn và S càng nhỏ thì áp suất p càng lớn</text>\n    </svg>",
+                  "options": [
+                        "Tăng độ lớn áp lực và giảm diện tích mặt bị ép.",
+                        "Giảm độ lớn áp lực và tăng diện tích mặt bị ép.",
+                        "Tăng diện tích mặt bị ép và giữ nguyên độ lớn áp lực.",
+                        "Giảm độ lớn áp lực và giảm diện tích mặt bị ép theo cùng một tỉ lệ."
+                  ],
+                  "correctIndex": 0,
+                  "explanation": "Từ công thức <span class=\"math\">p = <span class=\"frac\"><span class=\"num\">F<sub>N</sub></span><span class=\"den\">S</span></span></span>, để tăng áp suất <span class=\"math\">p</span> (ví dụ mài sắc lưỡi dao, đầu đinh nhọn), ta cần tăng áp lực <span class=\"math\">F<sub>N</sub></span> hoặc giảm diện tích bị ép <span class=\"math\">S</span>."
+            },
+            {
+                  "id": "L1_06",
+                  "tag": "Cấp độ 1 • Nhận biết & Thông hiểu",
+                  "question": "Khi nói về áp suất của chất lỏng đứng yên, phát biểu nào sau đây là ĐÚNG?",
+                  "svg": "<svg viewBox=\"0 0 500 220\" xmlns=\"http://www.w3.org/2000/svg\">\n      <defs>\n        <marker id=\"arrB\" markerWidth=\"8\" markerHeight=\"8\" refX=\"6\" refY=\"4\" orient=\"auto\"><path d=\"M0,0 L8,4 L0,8 Z\" fill=\"#1d4ed8\"/></marker>\n        <marker id=\"arrR\" markerWidth=\"8\" markerHeight=\"8\" refX=\"6\" refY=\"4\" orient=\"auto\"><path d=\"M0,0 L8,4 L0,8 Z\" fill=\"#dc2626\"/></marker>\n        <marker id=\"arrG\" markerWidth=\"8\" markerHeight=\"8\" refX=\"6\" refY=\"4\" orient=\"auto\"><path d=\"M0,0 L8,4 L0,8 Z\" fill=\"#16a34a\"/></marker>\n        <marker id=\"arrP\" markerWidth=\"8\" markerHeight=\"8\" refX=\"6\" refY=\"4\" orient=\"auto\"><path d=\"M0,0 L8,4 L0,8 Z\" fill=\"#7c3aed\"/></marker>\n      </defs>\n      <rect width=\"500\" height=\"220\" rx=\"12\" fill=\"#f8fafc\" stroke=\"#e2e8f0\"/>\n      <text x=\"250\" y=\"22\" text-anchor=\"middle\" font-size=\"13\" font-weight=\"bold\" fill=\"#0f172a\">ĐẶC ĐIỂM TRUYỀN ÁP SUẤT THEO MỌI PHƯƠNG CỦA CHẤT LỎNG</text>\n      \n      <rect x=\"70\" y=\"56\" width=\"110\" height=\"112\" fill=\"#dbeafe\" fill-opacity=\"0.75\" stroke=\"none\"/>\n      <polyline points=\"70,42 70,168 180,168 180,42\" fill=\"none\" stroke=\"#1e3a8a\" stroke-width=\"3\"/>\n      <line x1=\"70\" y1=\"56\" x2=\"180\" y2=\"56\" stroke=\"#2563eb\" stroke-width=\"2\" stroke-dasharray=\"5,3\"/>\n      <!-- Dashed depth projection -->\n      <circle cx=\"125\" cy=\"118\" r=\"5\" fill=\"#dc2626\"/>\n      <text x=\"136\" y=\"122\" font-size=\"11.5\" font-weight=\"bold\" fill=\"#dc2626\">M (mọi hướng)</text>\n      <line x1=\"125\" y1=\"56\" x2=\"125\" y2=\"118\" stroke=\"#dc2626\" stroke-width=\"1.8\" stroke-dasharray=\"3,3\"/>\n      <text x=\"118\" y=\"92\" text-anchor=\"end\" font-size=\"11\" font-weight=\"bold\" fill=\"#dc2626\">h</text>\n      <!-- Total height H projection -->\n      <line x1=\"48\" y1=\"56\" x2=\"70\" y2=\"56\" stroke=\"#64748b\" stroke-width=\"1.2\" stroke-dasharray=\"3,3\"/>\n      <line x1=\"48\" y1=\"168\" x2=\"70\" y2=\"168\" stroke=\"#64748b\" stroke-width=\"1.2\" stroke-dasharray=\"3,3\"/>\n      <line x1=\"54\" y1=\"56\" x2=\"54\" y2=\"168\" stroke=\"#0f172a\" stroke-width=\"1.8\"/>\n      <text x=\"48\" y=\"116\" text-anchor=\"end\" font-size=\"11\" font-weight=\"bold\" fill=\"#0f172a\">H</text>\n      <rect x=\"225\" y=\"48\" width=\"245\" height=\"114\" rx=\"8\" fill=\"#ffffff\" stroke=\"#cbd5e1\"/>\n      <text x=\"347\" y=\"76\" text-anchor=\"middle\" font-size=\"12\" font-weight=\"bold\" fill=\"#1e3a8a\">Tại điểm M độ sâu h: Áp suất tác dụng mọi phương</text>\n      <text x=\"347\" y=\"108\" text-anchor=\"middle\" font-size=\"12\" font-weight=\"bold\" fill=\"#dc2626\">Áp suất do cột chất lỏng: p<tspan baseline-shift=\"sub\" font-size=\"78%\">cl</tspan> = ρ · g · h = d · h</text>\n      <text x=\"347\" y=\"140\" text-anchor=\"middle\" font-size=\"12.5\" font-weight=\"bold\" fill=\"#16a34a\">Áp suất tuyệt đối: p = p<tspan baseline-shift=\"sub\" font-size=\"78%\">a</tspan> + ρ · g · h</text>\n    \n      <rect x=\"30\" y=\"182\" width=\"440\" height=\"28\" rx=\"6\" fill=\"#eff6ff\" stroke=\"#bfdbfe\"/>\n      <text x=\"250\" y=\"201\" text-anchor=\"middle\" font-size=\"12.5\" font-weight=\"bold\" fill=\"#1e3a8a\">Chất lỏng gây áp suất theo mọi phương lên đáy bình, thành bình và vật trong nó</text>\n    </svg>",
+                  "options": [
+                        "Chất lỏng gây ra áp suất theo mọi phương lên đáy bình, thành bình và các vật ở trong lòng chất lỏng.",
+                        "Chất lỏng chỉ gây ra áp suất theo phương thẳng đứng từ trên xuống đáy bình.",
+                        "Chất lỏng chỉ gây ra áp suất lên thành bình mà không tác dụng lên vật nhúng trong nó.",
+                        "Áp suất tại một điểm trong chất lỏng không phụ thuộc vào khối lượng riêng của chất lỏng."
+                  ],
+                  "correctIndex": 0,
+                  "explanation": "Tại một điểm bất kì trong lòng chất lỏng đứng yên, chất lỏng gây áp suất theo mọi phương (lên đáy bình, thành bình và bề mặt vật nhúng trong chất lỏng) với độ lớn như nhau theo mọi hướng tại cùng một độ sâu."
+            },
+            {
+                  "id": "L1_07",
+                  "tag": "Cấp độ 1 • Nhận biết & Thông hiểu",
+                  "question": "Gọi <span class=\"math\">p<sub>a</sub></span> là áp suất khí quyển trên mặt thoáng, <span class=\"math\">ρ</span> là khối lượng riêng của chất lỏng, <span class=\"math\">g</span> là gia tốc trọng trường. Áp suất tổng cộng <span class=\"math\">p</span> tại một điểm nằm ở độ sâu <span class=\"math\">h</span> so với mặt thoáng chất lỏng là",
+                  "svg": "<svg viewBox=\"0 0 500 220\" xmlns=\"http://www.w3.org/2000/svg\">\n      <defs>\n        <marker id=\"arrB\" markerWidth=\"8\" markerHeight=\"8\" refX=\"6\" refY=\"4\" orient=\"auto\"><path d=\"M0,0 L8,4 L0,8 Z\" fill=\"#1d4ed8\"/></marker>\n        <marker id=\"arrR\" markerWidth=\"8\" markerHeight=\"8\" refX=\"6\" refY=\"4\" orient=\"auto\"><path d=\"M0,0 L8,4 L0,8 Z\" fill=\"#dc2626\"/></marker>\n        <marker id=\"arrG\" markerWidth=\"8\" markerHeight=\"8\" refX=\"6\" refY=\"4\" orient=\"auto\"><path d=\"M0,0 L8,4 L0,8 Z\" fill=\"#16a34a\"/></marker>\n        <marker id=\"arrP\" markerWidth=\"8\" markerHeight=\"8\" refX=\"6\" refY=\"4\" orient=\"auto\"><path d=\"M0,0 L8,4 L0,8 Z\" fill=\"#7c3aed\"/></marker>\n      </defs>\n      <rect width=\"500\" height=\"220\" rx=\"12\" fill=\"#f8fafc\" stroke=\"#e2e8f0\"/>\n      <text x=\"250\" y=\"22\" text-anchor=\"middle\" font-size=\"13\" font-weight=\"bold\" fill=\"#0f172a\">CÔNG THỨC ÁP SUẤT TẠI ĐỘ SÂU h TRONG LÒNG CHẤT LỎNG</text>\n      \n      <rect x=\"70\" y=\"56\" width=\"110\" height=\"112\" fill=\"#dbeafe\" fill-opacity=\"0.75\" stroke=\"none\"/>\n      <polyline points=\"70,42 70,168 180,168 180,42\" fill=\"none\" stroke=\"#1e3a8a\" stroke-width=\"3\"/>\n      <line x1=\"70\" y1=\"56\" x2=\"180\" y2=\"56\" stroke=\"#2563eb\" stroke-width=\"2\" stroke-dasharray=\"5,3\"/>\n      <!-- Dashed depth projection -->\n      <circle cx=\"125\" cy=\"118\" r=\"5\" fill=\"#dc2626\"/>\n      <text x=\"136\" y=\"122\" font-size=\"11.5\" font-weight=\"bold\" fill=\"#dc2626\">M (p)</text>\n      <line x1=\"125\" y1=\"56\" x2=\"125\" y2=\"118\" stroke=\"#dc2626\" stroke-width=\"1.8\" stroke-dasharray=\"3,3\"/>\n      <text x=\"118\" y=\"92\" text-anchor=\"end\" font-size=\"11\" font-weight=\"bold\" fill=\"#dc2626\">h</text>\n      <!-- Total height H projection -->\n      <line x1=\"48\" y1=\"56\" x2=\"70\" y2=\"56\" stroke=\"#64748b\" stroke-width=\"1.2\" stroke-dasharray=\"3,3\"/>\n      <line x1=\"48\" y1=\"168\" x2=\"70\" y2=\"168\" stroke=\"#64748b\" stroke-width=\"1.2\" stroke-dasharray=\"3,3\"/>\n      <line x1=\"54\" y1=\"56\" x2=\"54\" y2=\"168\" stroke=\"#0f172a\" stroke-width=\"1.8\"/>\n      <text x=\"48\" y=\"116\" text-anchor=\"end\" font-size=\"11\" font-weight=\"bold\" fill=\"#0f172a\">H</text>\n      <rect x=\"225\" y=\"48\" width=\"245\" height=\"114\" rx=\"8\" fill=\"#ffffff\" stroke=\"#cbd5e1\"/>\n      <text x=\"347\" y=\"76\" text-anchor=\"middle\" font-size=\"12\" font-weight=\"bold\" fill=\"#1e3a8a\">Mặt thoáng chịu áp suất khí quyển p<tspan baseline-shift=\"sub\" font-size=\"78%\">a</tspan></text>\n      <text x=\"347\" y=\"108\" text-anchor=\"middle\" font-size=\"12\" font-weight=\"bold\" fill=\"#dc2626\">Cột chất lỏng độ sâu h gây áp suất: ρ · g · h</text>\n      <text x=\"347\" y=\"140\" text-anchor=\"middle\" font-size=\"12.5\" font-weight=\"bold\" fill=\"#16a34a\">Áp suất tổng cộng tại M: p = p<tspan baseline-shift=\"sub\" font-size=\"78%\">a</tspan> + ρ · g · h</text>\n    \n      <rect x=\"30\" y=\"182\" width=\"440\" height=\"28\" rx=\"6\" fill=\"#eff6ff\" stroke=\"#bfdbfe\"/>\n      <text x=\"250\" y=\"201\" text-anchor=\"middle\" font-size=\"12.5\" font-weight=\"bold\" fill=\"#1e3a8a\">Công thức chuẩn: p = p<tspan baseline-shift=\"sub\" font-size=\"78%\">a</tspan> + ρ · g · h = p<tspan baseline-shift=\"sub\" font-size=\"78%\">a</tspan> + d · h</text>\n    </svg>",
+                  "options": [
+                        "<span class=\"math\">p = p<sub>a</sub> + ρ · g · h</span>",
+                        "<span class=\"math\">p = p<sub>a</sub> - ρ · g · h</span>",
+                        "<span class=\"math\">p = <span class=\"frac\"><span class=\"num\">p<sub>a</sub></span><span class=\"den\">ρ · g · h</span></span></span>",
+                        "<span class=\"math\">p = p<sub>a</sub> + <span class=\"frac\"><span class=\"num\">ρ · g</span><span class=\"den\">h</span></span></span>"
+                  ],
+                  "correctIndex": 0,
+                  "explanation": "Áp suất tuyệt đối tại một điểm ở độ sâu <span class=\"math\">h</span> trong lòng chất lỏng bằng tổng áp suất khí quyển <span class=\"math\">p<sub>a</sub></span> và áp suất thủy tĩnh <span class=\"math\">ρ · g · h</span>: <span class=\"math\">p = p<sub>a</sub> + ρ · g · h</span>."
+            },
+            {
+                  "id": "L1_08",
+                  "tag": "Cấp độ 1 • Nhận biết & Thông hiểu",
+                  "question": "Xét hai điểm <span class=\"math\">M</span> và <span class=\"math\">N</span> trong cùng một khối chất lỏng đứng yên có khối lượng riêng <span class=\"math\">ρ</span>, độ chênh lệch độ sâu giữa hai điểm là <span class=\"math\">Δh</span>. Độ chênh lệch áp suất <span class=\"math\">Δp</span> giữa hai điểm đó được tính bằng công thức",
+                  "svg": "<svg viewBox=\"0 0 500 220\" xmlns=\"http://www.w3.org/2000/svg\">\n      <defs>\n        <marker id=\"arrB\" markerWidth=\"8\" markerHeight=\"8\" refX=\"6\" refY=\"4\" orient=\"auto\"><path d=\"M0,0 L8,4 L0,8 Z\" fill=\"#1d4ed8\"/></marker>\n        <marker id=\"arrR\" markerWidth=\"8\" markerHeight=\"8\" refX=\"6\" refY=\"4\" orient=\"auto\"><path d=\"M0,0 L8,4 L0,8 Z\" fill=\"#dc2626\"/></marker>\n        <marker id=\"arrG\" markerWidth=\"8\" markerHeight=\"8\" refX=\"6\" refY=\"4\" orient=\"auto\"><path d=\"M0,0 L8,4 L0,8 Z\" fill=\"#16a34a\"/></marker>\n        <marker id=\"arrP\" markerWidth=\"8\" markerHeight=\"8\" refX=\"6\" refY=\"4\" orient=\"auto\"><path d=\"M0,0 L8,4 L0,8 Z\" fill=\"#7c3aed\"/></marker>\n      </defs>\n      <rect width=\"500\" height=\"220\" rx=\"12\" fill=\"#f8fafc\" stroke=\"#e2e8f0\"/>\n      <text x=\"250\" y=\"22\" text-anchor=\"middle\" font-size=\"13\" font-weight=\"bold\" fill=\"#0f172a\">PHƯƠNG TRÌNH CƠ BẢN CỦA CHẤT LƯU ĐỨNG YÊN: Δp = ρ · g · Δh</text>\n      \n      <rect x=\"70\" y=\"56\" width=\"110\" height=\"112\" fill=\"#dbeafe\" fill-opacity=\"0.75\" stroke=\"none\"/>\n      <polyline points=\"70,42 70,168 180,168 180,42\" fill=\"none\" stroke=\"#1e3a8a\" stroke-width=\"3\"/>\n      <line x1=\"70\" y1=\"56\" x2=\"180\" y2=\"56\" stroke=\"#2563eb\" stroke-width=\"2\" stroke-dasharray=\"5,3\"/>\n      <!-- Dashed depth projection -->\n      <circle cx=\"125\" cy=\"118\" r=\"5\" fill=\"#dc2626\"/>\n      <text x=\"136\" y=\"122\" font-size=\"11.5\" font-weight=\"bold\" fill=\"#dc2626\">N (h₂ > h₁)</text>\n      <line x1=\"125\" y1=\"56\" x2=\"125\" y2=\"118\" stroke=\"#dc2626\" stroke-width=\"1.8\" stroke-dasharray=\"3,3\"/>\n      <text x=\"118\" y=\"92\" text-anchor=\"end\" font-size=\"11\" font-weight=\"bold\" fill=\"#dc2626\">Δh = h₂ - h₁</text>\n      <!-- Total height H projection -->\n      <line x1=\"48\" y1=\"56\" x2=\"70\" y2=\"56\" stroke=\"#64748b\" stroke-width=\"1.2\" stroke-dasharray=\"3,3\"/>\n      <line x1=\"48\" y1=\"168\" x2=\"70\" y2=\"168\" stroke=\"#64748b\" stroke-width=\"1.2\" stroke-dasharray=\"3,3\"/>\n      <line x1=\"54\" y1=\"56\" x2=\"54\" y2=\"168\" stroke=\"#0f172a\" stroke-width=\"1.8\"/>\n      <text x=\"48\" y=\"116\" text-anchor=\"end\" font-size=\"11\" font-weight=\"bold\" fill=\"#0f172a\">H</text>\n      <rect x=\"225\" y=\"48\" width=\"245\" height=\"114\" rx=\"8\" fill=\"#ffffff\" stroke=\"#cbd5e1\"/>\n      <text x=\"347\" y=\"76\" text-anchor=\"middle\" font-size=\"12\" font-weight=\"bold\" fill=\"#1e3a8a\">Tại M (độ sâu h₁): p₁ = p<tspan baseline-shift=\"sub\" font-size=\"78%\">a</tspan> + ρ · g · h₁</text>\n      <text x=\"347\" y=\"108\" text-anchor=\"middle\" font-size=\"12\" font-weight=\"bold\" fill=\"#dc2626\">Tại N (độ sâu h₂): p₂ = p<tspan baseline-shift=\"sub\" font-size=\"78%\">a</tspan> + ρ · g · h₂</text>\n      <text x=\"347\" y=\"140\" text-anchor=\"middle\" font-size=\"12.5\" font-weight=\"bold\" fill=\"#16a34a\">Độ chênh lệch: Δp = p₂ - p₁ = ρ · g · Δh</text>\n    \n      <rect x=\"30\" y=\"182\" width=\"440\" height=\"28\" rx=\"6\" fill=\"#eff6ff\" stroke=\"#bfdbfe\"/>\n      <text x=\"250\" y=\"201\" text-anchor=\"middle\" font-size=\"12.5\" font-weight=\"bold\" fill=\"#1e3a8a\">Độ chênh lệch áp suất giữa 2 điểm: Δp = ρ · g · Δh (không phụ thuộc p<tspan baseline-shift=\"sub\" font-size=\"78%\">a</tspan>)</text>\n    </svg>",
+                  "options": [
+                        "<span class=\"math\">Δp = ρ · g · Δh</span>",
+                        "<span class=\"math\">Δp = p<sub>a</sub> + ρ · g · Δh</span>",
+                        "<span class=\"math\">Δp = <span class=\"frac\"><span class=\"num\">ρ · g</span><span class=\"den\">Δh</span></span></span>",
+                        "<span class=\"math\">Δp = 0</span>"
+                  ],
+                  "correctIndex": 0,
+                  "explanation": "Theo phương trình cơ bản của chất lưu đứng yên, độ chênh lệch áp suất giữa hai điểm ở hai độ sâu khác nhau là <span class=\"math\">Δp = p<sub>2</sub> - p<sub>1</sub> = ρ · g · (h<sub>2</sub> - h<sub>1</sub>) = ρ · g · Δh</span>, không phụ thuộc vào áp suất khí quyển <span class=\"math\">p<sub>a</sub></span>."
+            },
+            {
+                  "id": "L1_09",
+                  "tag": "Cấp độ 1 • Nhận biết & Thông hiểu",
+                  "question": "Một thùng cao <span class=\"math\">2 m</span> đang đựng một lượng nước có độ cao cột nước là <span class=\"math\">h = 1,2 m</span>. Biết trọng lượng riêng của nước là <span class=\"math\">d = 10 000 N/m<sup>3</sup></span>. Áp suất do cột nước gây ra tại đáy thùng bằng",
+                  "svg": "<svg viewBox=\"0 0 500 220\" xmlns=\"http://www.w3.org/2000/svg\">\n      <defs>\n        <marker id=\"arrB\" markerWidth=\"8\" markerHeight=\"8\" refX=\"6\" refY=\"4\" orient=\"auto\"><path d=\"M0,0 L8,4 L0,8 Z\" fill=\"#1d4ed8\"/></marker>\n        <marker id=\"arrR\" markerWidth=\"8\" markerHeight=\"8\" refX=\"6\" refY=\"4\" orient=\"auto\"><path d=\"M0,0 L8,4 L0,8 Z\" fill=\"#dc2626\"/></marker>\n        <marker id=\"arrG\" markerWidth=\"8\" markerHeight=\"8\" refX=\"6\" refY=\"4\" orient=\"auto\"><path d=\"M0,0 L8,4 L0,8 Z\" fill=\"#16a34a\"/></marker>\n        <marker id=\"arrP\" markerWidth=\"8\" markerHeight=\"8\" refX=\"6\" refY=\"4\" orient=\"auto\"><path d=\"M0,0 L8,4 L0,8 Z\" fill=\"#7c3aed\"/></marker>\n      </defs>\n      <rect width=\"500\" height=\"220\" rx=\"12\" fill=\"#f8fafc\" stroke=\"#e2e8f0\"/>\n      <text x=\"250\" y=\"22\" text-anchor=\"middle\" font-size=\"13\" font-weight=\"bold\" fill=\"#0f172a\">TÍNH ÁP SUẤT CỘT NƯỚC TÁC DỤNG LÊN ĐÁY THÙNG</text>\n      \n      <rect x=\"70\" y=\"56\" width=\"110\" height=\"112\" fill=\"#dbeafe\" fill-opacity=\"0.75\" stroke=\"none\"/>\n      <polyline points=\"70,42 70,168 180,168 180,42\" fill=\"none\" stroke=\"#1e3a8a\" stroke-width=\"3\"/>\n      <line x1=\"70\" y1=\"56\" x2=\"180\" y2=\"56\" stroke=\"#2563eb\" stroke-width=\"2\" stroke-dasharray=\"5,3\"/>\n      <!-- Dashed depth projection -->\n      <circle cx=\"125\" cy=\"118\" r=\"5\" fill=\"#dc2626\"/>\n      <text x=\"136\" y=\"122\" font-size=\"11.5\" font-weight=\"bold\" fill=\"#dc2626\">Đáy thùng</text>\n      <line x1=\"125\" y1=\"56\" x2=\"125\" y2=\"118\" stroke=\"#dc2626\" stroke-width=\"1.8\" stroke-dasharray=\"3,3\"/>\n      <text x=\"118\" y=\"92\" text-anchor=\"end\" font-size=\"11\" font-weight=\"bold\" fill=\"#dc2626\">h = 1,2 m</text>\n      <!-- Total height H projection -->\n      <line x1=\"48\" y1=\"56\" x2=\"70\" y2=\"56\" stroke=\"#64748b\" stroke-width=\"1.2\" stroke-dasharray=\"3,3\"/>\n      <line x1=\"48\" y1=\"168\" x2=\"70\" y2=\"168\" stroke=\"#64748b\" stroke-width=\"1.2\" stroke-dasharray=\"3,3\"/>\n      <line x1=\"54\" y1=\"56\" x2=\"54\" y2=\"168\" stroke=\"#0f172a\" stroke-width=\"1.8\"/>\n      <text x=\"48\" y=\"116\" text-anchor=\"end\" font-size=\"11\" font-weight=\"bold\" fill=\"#0f172a\">h = 1,2 m</text>\n      <rect x=\"225\" y=\"48\" width=\"245\" height=\"114\" rx=\"8\" fill=\"#ffffff\" stroke=\"#cbd5e1\"/>\n      <text x=\"347\" y=\"76\" text-anchor=\"middle\" font-size=\"12\" font-weight=\"bold\" fill=\"#1e3a8a\">Chiều cao cột nước thực tế: h = 1,2 m</text>\n      <text x=\"347\" y=\"108\" text-anchor=\"middle\" font-size=\"12\" font-weight=\"bold\" fill=\"#dc2626\">Trọng lượng riêng của nước: d = 10 000 N/m³</text>\n      <text x=\"347\" y=\"140\" text-anchor=\"middle\" font-size=\"12.5\" font-weight=\"bold\" fill=\"#16a34a\">Áp suất nước ở đáy: p = d · h = 12 000 Pa</text>\n    \n      <rect x=\"30\" y=\"182\" width=\"440\" height=\"28\" rx=\"6\" fill=\"#eff6ff\" stroke=\"#bfdbfe\"/>\n      <text x=\"250\" y=\"201\" text-anchor=\"middle\" font-size=\"12.5\" font-weight=\"bold\" fill=\"#1e3a8a\">p = d · h = 10 000 · 1,2 = 12 000 Pa</text>\n    </svg>",
+                  "options": [
+                        "<span class=\"math\">12 000 Pa</span>",
+                        "<span class=\"math\">20 000 Pa</span>",
+                        "<span class=\"math\">1 200 Pa</span>",
+                        "<span class=\"math\">8 000 Pa</span>"
+                  ],
+                  "correctIndex": 0,
+                  "explanation": "Áp suất do cột nước gây ra tại đáy thùng phụ thuộc vào chiều cao cột nước thực tế trong thùng (<span class=\"math\">h = 1,2 m</span>): <span class=\"math\">p = d · h = 10 000 · 1,2 = 12 000 Pa</span>."
+            },
+            {
+                  "id": "L1_10",
+                  "tag": "Cấp độ 1 • Nhận biết & Thông hiểu",
+                  "question": "Một tàu ngầm đang di chuyển dưới biển. Áp kế đặt ở ngoài vỏ tàu ban đầu chỉ <span class=\"math\">875 000 N/m<sup>2</sup></span>, một lúc sau áp kế chỉ <span class=\"math\">1 165 000 N/m<sup>2</sup></span>. Nhận xét nào sau đây là đúng?",
+                  "svg": "<svg viewBox=\"0 0 500 220\" xmlns=\"http://www.w3.org/2000/svg\">\n      <defs>\n        <marker id=\"arrB\" markerWidth=\"8\" markerHeight=\"8\" refX=\"6\" refY=\"4\" orient=\"auto\"><path d=\"M0,0 L8,4 L0,8 Z\" fill=\"#1d4ed8\"/></marker>\n        <marker id=\"arrR\" markerWidth=\"8\" markerHeight=\"8\" refX=\"6\" refY=\"4\" orient=\"auto\"><path d=\"M0,0 L8,4 L0,8 Z\" fill=\"#dc2626\"/></marker>\n        <marker id=\"arrG\" markerWidth=\"8\" markerHeight=\"8\" refX=\"6\" refY=\"4\" orient=\"auto\"><path d=\"M0,0 L8,4 L0,8 Z\" fill=\"#16a34a\"/></marker>\n        <marker id=\"arrP\" markerWidth=\"8\" markerHeight=\"8\" refX=\"6\" refY=\"4\" orient=\"auto\"><path d=\"M0,0 L8,4 L0,8 Z\" fill=\"#7c3aed\"/></marker>\n      </defs>\n      <rect width=\"500\" height=\"220\" rx=\"12\" fill=\"#f8fafc\" stroke=\"#e2e8f0\"/>\n      <text x=\"250\" y=\"22\" text-anchor=\"middle\" font-size=\"13\" font-weight=\"bold\" fill=\"#0f172a\">TÀU NGẦM LẶN SÂU XUỐNG KHI ÁP SUẤT NGOÀI VỎ TĂNG</text>\n      \n      <rect x=\"70\" y=\"56\" width=\"110\" height=\"112\" fill=\"#dbeafe\" fill-opacity=\"0.75\" stroke=\"none\"/>\n      <polyline points=\"70,42 70,168 180,168 180,42\" fill=\"none\" stroke=\"#1e3a8a\" stroke-width=\"3\"/>\n      <line x1=\"70\" y1=\"56\" x2=\"180\" y2=\"56\" stroke=\"#2563eb\" stroke-width=\"2\" stroke-dasharray=\"5,3\"/>\n      <!-- Dashed depth projection -->\n      <circle cx=\"125\" cy=\"118\" r=\"5\" fill=\"#dc2626\"/>\n      <text x=\"136\" y=\"122\" font-size=\"11.5\" font-weight=\"bold\" fill=\"#dc2626\">Tàu ngầm</text>\n      <line x1=\"125\" y1=\"56\" x2=\"125\" y2=\"118\" stroke=\"#dc2626\" stroke-width=\"1.8\" stroke-dasharray=\"3,3\"/>\n      <text x=\"118\" y=\"92\" text-anchor=\"end\" font-size=\"11\" font-weight=\"bold\" fill=\"#dc2626\">h₂ > h₁</text>\n      <!-- Total height H projection -->\n      <line x1=\"48\" y1=\"56\" x2=\"70\" y2=\"56\" stroke=\"#64748b\" stroke-width=\"1.2\" stroke-dasharray=\"3,3\"/>\n      <line x1=\"48\" y1=\"168\" x2=\"70\" y2=\"168\" stroke=\"#64748b\" stroke-width=\"1.2\" stroke-dasharray=\"3,3\"/>\n      <line x1=\"54\" y1=\"56\" x2=\"54\" y2=\"168\" stroke=\"#0f172a\" stroke-width=\"1.8\"/>\n      <text x=\"48\" y=\"116\" text-anchor=\"end\" font-size=\"11\" font-weight=\"bold\" fill=\"#0f172a\">Biển</text>\n      <rect x=\"225\" y=\"48\" width=\"245\" height=\"114\" rx=\"8\" fill=\"#ffffff\" stroke=\"#cbd5e1\"/>\n      <text x=\"347\" y=\"76\" text-anchor=\"middle\" font-size=\"12\" font-weight=\"bold\" fill=\"#1e3a8a\">Lúc đầu: p₁ = 875 000 Pa (ở độ sâu h₁)</text>\n      <text x=\"347\" y=\"108\" text-anchor=\"middle\" font-size=\"12\" font-weight=\"bold\" fill=\"#dc2626\">Lúc sau: p₂ = 1 165 000 Pa > p₁</text>\n      <text x=\"347\" y=\"140\" text-anchor=\"middle\" font-size=\"12.5\" font-weight=\"bold\" fill=\"#16a34a\">Do p tăng ⟹ độ sâu h tăng ⟹ Tàu đang lặn xuống</text>\n    \n      <rect x=\"30\" y=\"182\" width=\"440\" height=\"28\" rx=\"6\" fill=\"#eff6ff\" stroke=\"#bfdbfe\"/>\n      <text x=\"250\" y=\"201\" text-anchor=\"middle\" font-size=\"12.5\" font-weight=\"bold\" fill=\"#1e3a8a\">Áp suất p tăng từ 875 kPa lên 1165 kPa chứng tỏ tàu ngầm đang lặn xuống</text>\n    </svg>",
+                  "options": [
+                        "Tàu ngầm đang lặn sâu xuống.",
+                        "Tàu ngầm đang từ từ nổi lên mặt nước.",
+                        "Tàu ngầm đang chuyển động thẳng theo phương nằm ngang ở cùng độ sâu.",
+                        "Tàu ngầm đang đứng yên tại một vị trí."
+                  ],
+                  "correctIndex": 0,
+                  "explanation": "Vì áp suất ngoài vỏ tàu tăng từ <span class=\"math\">875 000 Pa</span> lên <span class=\"math\">1 165 000 Pa</span>, mà <span class=\"math\">p = p<sub>a</sub> + ρ · g · h</span> tỉ lệ thuận với độ sâu <span class=\"math\">h</span>, nên độ sâu <span class=\"math\">h</span> của tàu đang tăng lên, tức là tàu đang lặn xuống."
+            },
+            {
+                  "id": "L1_11",
+                  "tag": "Cấp độ 1 • Nhận biết & Thông hiểu",
+                  "question": "Biết khối lượng riêng của dầu ăn là <span class=\"math\">ρ = 800 kg/m<sup>3</sup></span> và gia tốc trọng trường <span class=\"math\">g = 10 m/s<sup>2</sup></span>. Trọng lượng <span class=\"math\">P</span> của một bình chứa <span class=\"math\">V = 2 lít</span> dầu ăn (bỏ qua khối lượng vỏ bình) bằng",
+                  "svg": "<svg viewBox=\"0 0 500 220\" xmlns=\"http://www.w3.org/2000/svg\">\n      <defs>\n        <marker id=\"arrB\" markerWidth=\"8\" markerHeight=\"8\" refX=\"6\" refY=\"4\" orient=\"auto\"><path d=\"M0,0 L8,4 L0,8 Z\" fill=\"#1d4ed8\"/></marker>\n        <marker id=\"arrR\" markerWidth=\"8\" markerHeight=\"8\" refX=\"6\" refY=\"4\" orient=\"auto\"><path d=\"M0,0 L8,4 L0,8 Z\" fill=\"#dc2626\"/></marker>\n        <marker id=\"arrG\" markerWidth=\"8\" markerHeight=\"8\" refX=\"6\" refY=\"4\" orient=\"auto\"><path d=\"M0,0 L8,4 L0,8 Z\" fill=\"#16a34a\"/></marker>\n        <marker id=\"arrP\" markerWidth=\"8\" markerHeight=\"8\" refX=\"6\" refY=\"4\" orient=\"auto\"><path d=\"M0,0 L8,4 L0,8 Z\" fill=\"#7c3aed\"/></marker>\n      </defs>\n      <rect width=\"500\" height=\"220\" rx=\"12\" fill=\"#f8fafc\" stroke=\"#e2e8f0\"/>\n      <text x=\"250\" y=\"22\" text-anchor=\"middle\" font-size=\"13\" font-weight=\"bold\" fill=\"#0f172a\">TÍNH KHỐI LƯỢNG VÀ TRỌNG LƯỢNG CỦA V = 2 LÍT DẦU ĂN</text>\n      \n      <rect x=\"70\" y=\"56\" width=\"110\" height=\"112\" fill=\"#dbeafe\" fill-opacity=\"0.75\" stroke=\"none\"/>\n      <polyline points=\"70,42 70,168 180,168 180,42\" fill=\"none\" stroke=\"#1e3a8a\" stroke-width=\"3\"/>\n      <line x1=\"70\" y1=\"56\" x2=\"180\" y2=\"56\" stroke=\"#2563eb\" stroke-width=\"2\" stroke-dasharray=\"5,3\"/>\n      <!-- Dashed depth projection -->\n      <circle cx=\"125\" cy=\"118\" r=\"5\" fill=\"#dc2626\"/>\n      <text x=\"136\" y=\"122\" font-size=\"11.5\" font-weight=\"bold\" fill=\"#dc2626\">P = 16 N</text>\n      <line x1=\"125\" y1=\"56\" x2=\"125\" y2=\"118\" stroke=\"#dc2626\" stroke-width=\"1.8\" stroke-dasharray=\"3,3\"/>\n      <text x=\"118\" y=\"92\" text-anchor=\"end\" font-size=\"11\" font-weight=\"bold\" fill=\"#dc2626\">ρ = 800 kg/m³</text>\n      <!-- Total height H projection -->\n      <line x1=\"48\" y1=\"56\" x2=\"70\" y2=\"56\" stroke=\"#64748b\" stroke-width=\"1.2\" stroke-dasharray=\"3,3\"/>\n      <line x1=\"48\" y1=\"168\" x2=\"70\" y2=\"168\" stroke=\"#64748b\" stroke-width=\"1.2\" stroke-dasharray=\"3,3\"/>\n      <line x1=\"54\" y1=\"56\" x2=\"54\" y2=\"168\" stroke=\"#0f172a\" stroke-width=\"1.8\"/>\n      <text x=\"48\" y=\"116\" text-anchor=\"end\" font-size=\"11\" font-weight=\"bold\" fill=\"#0f172a\">V = 2 lít</text>\n      <rect x=\"225\" y=\"48\" width=\"245\" height=\"114\" rx=\"8\" fill=\"#ffffff\" stroke=\"#cbd5e1\"/>\n      <text x=\"347\" y=\"76\" text-anchor=\"middle\" font-size=\"12\" font-weight=\"bold\" fill=\"#1e3a8a\">Đổi đơn vị: V = 2 lít = 0,002 m³</text>\n      <text x=\"347\" y=\"108\" text-anchor=\"middle\" font-size=\"12\" font-weight=\"bold\" fill=\"#dc2626\">Khối lượng: m = ρ · V = 800 × 0,002 = 1,6 kg</text>\n      <text x=\"347\" y=\"140\" text-anchor=\"middle\" font-size=\"12.5\" font-weight=\"bold\" fill=\"#16a34a\">Trọng lượng: P = m · g = 1,6 × 10 = 16 N</text>\n    \n      <rect x=\"30\" y=\"182\" width=\"440\" height=\"28\" rx=\"6\" fill=\"#eff6ff\" stroke=\"#bfdbfe\"/>\n      <text x=\"250\" y=\"201\" text-anchor=\"middle\" font-size=\"12.5\" font-weight=\"bold\" fill=\"#1e3a8a\">m = ρ · V = 1,6 kg  ⟹  P = m · g = 16 N</text>\n    </svg>",
+                  "options": [
+                        "<span class=\"math\">16 N</span>",
+                        "<span class=\"math\">1,6 N</span>",
+                        "<span class=\"math\">160 N</span>",
+                        "<span class=\"math\">8 N</span>"
+                  ],
+                  "correctIndex": 0,
+                  "explanation": "Đổi thể tích: <span class=\"math\">V = 2 lít = 2 dm<sup>3</sup> = 2 · 10<sup>-3</sup> m<sup>3</sup></span>. Khối lượng của 2 lít dầu ăn: <span class=\"math\">m = ρ · V = 800 · 2 · 10<sup>-3</sup> = 1,6 kg</span>. Trọng lượng: <span class=\"math\">P = m · g = 1,6 · 10 = 16 N</span>."
+            },
+            {
+                  "id": "L1_12",
+                  "tag": "Cấp độ 1 • Nhận biết & Thông hiểu",
+                  "question": "Cho ba bình hình trụ giống hệt nhau đựng cùng một thể tích của ba chất lỏng khác nhau: thủy ngân (<span class=\"math\">ρ<sub>Hg</sub> = 13 600 kg/m<sup>3</sup></span>), nước (<span class=\"math\">ρ<sub>nước</sub> = 1 000 kg/m<sup>3</sup></span>) và rượu (<span class=\"math\">ρ<sub>rượu</sub> = 800 kg/m<sup>3</sup></span>). So sánh áp suất chất lỏng tác dụng lên đáy của ba bình là",
+                  "svg": "<svg viewBox=\"0 0 500 220\" xmlns=\"http://www.w3.org/2000/svg\">\n      <defs>\n        <marker id=\"arrB\" markerWidth=\"8\" markerHeight=\"8\" refX=\"6\" refY=\"4\" orient=\"auto\"><path d=\"M0,0 L8,4 L0,8 Z\" fill=\"#1d4ed8\"/></marker>\n        <marker id=\"arrR\" markerWidth=\"8\" markerHeight=\"8\" refX=\"6\" refY=\"4\" orient=\"auto\"><path d=\"M0,0 L8,4 L0,8 Z\" fill=\"#dc2626\"/></marker>\n        <marker id=\"arrG\" markerWidth=\"8\" markerHeight=\"8\" refX=\"6\" refY=\"4\" orient=\"auto\"><path d=\"M0,0 L8,4 L0,8 Z\" fill=\"#16a34a\"/></marker>\n        <marker id=\"arrP\" markerWidth=\"8\" markerHeight=\"8\" refX=\"6\" refY=\"4\" orient=\"auto\"><path d=\"M0,0 L8,4 L0,8 Z\" fill=\"#7c3aed\"/></marker>\n      </defs>\n      <rect width=\"500\" height=\"220\" rx=\"12\" fill=\"#f8fafc\" stroke=\"#e2e8f0\"/>\n      <text x=\"250\" y=\"22\" text-anchor=\"middle\" font-size=\"13\" font-weight=\"bold\" fill=\"#0f172a\">SO SÁNH ÁP SUẤT ĐÁY BÌNH CỦA 3 CHẤT LỎNG CÙNG ĐỘ CAO h</text>\n      \n      <rect x=\"70\" y=\"56\" width=\"110\" height=\"112\" fill=\"#dbeafe\" fill-opacity=\"0.75\" stroke=\"none\"/>\n      <polyline points=\"70,42 70,168 180,168 180,42\" fill=\"none\" stroke=\"#1e3a8a\" stroke-width=\"3\"/>\n      <line x1=\"70\" y1=\"56\" x2=\"180\" y2=\"56\" stroke=\"#2563eb\" stroke-width=\"2\" stroke-dasharray=\"5,3\"/>\n      <!-- Dashed depth projection -->\n      <circle cx=\"125\" cy=\"118\" r=\"5\" fill=\"#dc2626\"/>\n      <text x=\"136\" y=\"122\" font-size=\"11.5\" font-weight=\"bold\" fill=\"#dc2626\">p = ρ·g·h</text>\n      <line x1=\"125\" y1=\"56\" x2=\"125\" y2=\"118\" stroke=\"#dc2626\" stroke-width=\"1.8\" stroke-dasharray=\"3,3\"/>\n      <text x=\"118\" y=\"92\" text-anchor=\"end\" font-size=\"11\" font-weight=\"bold\" fill=\"#dc2626\">h</text>\n      <!-- Total height H projection -->\n      <line x1=\"48\" y1=\"56\" x2=\"70\" y2=\"56\" stroke=\"#64748b\" stroke-width=\"1.2\" stroke-dasharray=\"3,3\"/>\n      <line x1=\"48\" y1=\"168\" x2=\"70\" y2=\"168\" stroke=\"#64748b\" stroke-width=\"1.2\" stroke-dasharray=\"3,3\"/>\n      <line x1=\"54\" y1=\"56\" x2=\"54\" y2=\"168\" stroke=\"#0f172a\" stroke-width=\"1.8\"/>\n      <text x=\"48\" y=\"116\" text-anchor=\"end\" font-size=\"11\" font-weight=\"bold\" fill=\"#0f172a\">Cùng h</text>\n      <rect x=\"225\" y=\"48\" width=\"245\" height=\"114\" rx=\"8\" fill=\"#ffffff\" stroke=\"#cbd5e1\"/>\n      <text x=\"347\" y=\"76\" text-anchor=\"middle\" font-size=\"12\" font-weight=\"bold\" fill=\"#1e3a8a\">Ba bình giống nhau, cùng V  ⟹  Cùng chiều cao h</text>\n      <text x=\"347\" y=\"108\" text-anchor=\"middle\" font-size=\"12\" font-weight=\"bold\" fill=\"#dc2626\">ρ<tspan baseline-shift=\"sub\" font-size=\"78%\">Hg</tspan> (13600) > ρ<tspan baseline-shift=\"sub\" font-size=\"78%\">nước</tspan> (1000) > ρ<tspan baseline-shift=\"sub\" font-size=\"78%\">rượu</tspan> (800)</text>\n      <text x=\"347\" y=\"140\" text-anchor=\"middle\" font-size=\"12.5\" font-weight=\"bold\" fill=\"#16a34a\">Suy ra: p<tspan baseline-shift=\"sub\" font-size=\"78%\">Hg</tspan> > p<tspan baseline-shift=\"sub\" font-size=\"78%\">nước</tspan> > p<tspan baseline-shift=\"sub\" font-size=\"78%\">rượu</tspan></text>\n    \n      <rect x=\"30\" y=\"182\" width=\"440\" height=\"28\" rx=\"6\" fill=\"#eff6ff\" stroke=\"#bfdbfe\"/>\n      <text x=\"250\" y=\"201\" text-anchor=\"middle\" font-size=\"12.5\" font-weight=\"bold\" fill=\"#1e3a8a\">Khi cùng chiều cao cột chất lỏng h: ρ càng lớn thì áp suất đáy p = ρ·g·h càng lớn</text>\n    </svg>",
+                  "options": [
+                        "<span class=\"math\">p<sub>Hg</sub> > p<sub>nước</sub> > p<sub>rượu</sub></span>",
+                        "<span class=\"math\">p<sub>Hg</sub> < p<sub>nước</sub> < p<sub>rượu</sub></span>",
+                        "<span class=\"math\">p<sub>Hg</sub> = p<sub>nước</sub> = p<sub>rượu</sub></span>",
+                        "<span class=\"math\">p<sub>nước</sub> > p<sub>Hg</sub> > p<sub>rượu</sub></span>"
+                  ],
+                  "correctIndex": 0,
+                  "explanation": "Ba bình giống hệt nhau chứa cùng thể tích chất lỏng nên độ cao cột chất lỏng <span class=\"math\">h</span> ở ba bình bằng nhau. Do <span class=\"math\">p = ρ · g · h</span> và <span class=\"math\">ρ<sub>Hg</sub> > ρ<sub>nước</sub> > ρ<sub>rượu</sub></span> nên <span class=\"math\">p<sub>Hg</sub> > p<sub>nước</sub> > p<sub>rượu</sub></span>."
+            }
+      ],
+      "2": [
+            {
+                  "id": "L2_01",
+                  "tag": "Cấp độ 2 • Vận dụng (7–8 điểm)",
+                  "question": "Một bể hình hộp chữ nhật cao <span class=\"math\">H = 1,5 m</span> chứa đầy nước. Biết trọng lượng riêng của nước là <span class=\"math\">d = 10 000 N/m<sup>3</sup></span>. Áp suất do nước gây ra tại điểm <span class=\"math\">M</span> nằm cách đáy bể một đoạn <span class=\"math\">0,7 m</span> là",
+                  "svg": "<svg viewBox=\"0 0 500 220\" xmlns=\"http://www.w3.org/2000/svg\">\n      <defs>\n        <marker id=\"arrB\" markerWidth=\"8\" markerHeight=\"8\" refX=\"6\" refY=\"4\" orient=\"auto\"><path d=\"M0,0 L8,4 L0,8 Z\" fill=\"#1d4ed8\"/></marker>\n        <marker id=\"arrR\" markerWidth=\"8\" markerHeight=\"8\" refX=\"6\" refY=\"4\" orient=\"auto\"><path d=\"M0,0 L8,4 L0,8 Z\" fill=\"#dc2626\"/></marker>\n        <marker id=\"arrG\" markerWidth=\"8\" markerHeight=\"8\" refX=\"6\" refY=\"4\" orient=\"auto\"><path d=\"M0,0 L8,4 L0,8 Z\" fill=\"#16a34a\"/></marker>\n        <marker id=\"arrP\" markerWidth=\"8\" markerHeight=\"8\" refX=\"6\" refY=\"4\" orient=\"auto\"><path d=\"M0,0 L8,4 L0,8 Z\" fill=\"#7c3aed\"/></marker>\n      </defs>\n      <rect width=\"500\" height=\"220\" rx=\"12\" fill=\"#f8fafc\" stroke=\"#e2e8f0\"/>\n      <text x=\"250\" y=\"22\" text-anchor=\"middle\" font-size=\"13\" font-weight=\"bold\" fill=\"#0f172a\">ÁP SUẤT TẠI ĐIỂM M CÁCH ĐÁY BỂ 0,7 m (BỂ CAO H = 1,5 m)</text>\n      \n      <rect x=\"70\" y=\"56\" width=\"110\" height=\"112\" fill=\"#dbeafe\" fill-opacity=\"0.75\" stroke=\"none\"/>\n      <polyline points=\"70,42 70,168 180,168 180,42\" fill=\"none\" stroke=\"#1e3a8a\" stroke-width=\"3\"/>\n      <line x1=\"70\" y1=\"56\" x2=\"180\" y2=\"56\" stroke=\"#2563eb\" stroke-width=\"2\" stroke-dasharray=\"5,3\"/>\n      <!-- Dashed depth projection -->\n      <circle cx=\"125\" cy=\"118\" r=\"5\" fill=\"#dc2626\"/>\n      <text x=\"136\" y=\"122\" font-size=\"11.5\" font-weight=\"bold\" fill=\"#dc2626\">M (cách đáy 0,7m)</text>\n      <line x1=\"125\" y1=\"56\" x2=\"125\" y2=\"118\" stroke=\"#dc2626\" stroke-width=\"1.8\" stroke-dasharray=\"3,3\"/>\n      <text x=\"118\" y=\"92\" text-anchor=\"end\" font-size=\"11\" font-weight=\"bold\" fill=\"#dc2626\">h = 0,8 m</text>\n      <!-- Total height H projection -->\n      <line x1=\"48\" y1=\"56\" x2=\"70\" y2=\"56\" stroke=\"#64748b\" stroke-width=\"1.2\" stroke-dasharray=\"3,3\"/>\n      <line x1=\"48\" y1=\"168\" x2=\"70\" y2=\"168\" stroke=\"#64748b\" stroke-width=\"1.2\" stroke-dasharray=\"3,3\"/>\n      <line x1=\"54\" y1=\"56\" x2=\"54\" y2=\"168\" stroke=\"#0f172a\" stroke-width=\"1.8\"/>\n      <text x=\"48\" y=\"116\" text-anchor=\"end\" font-size=\"11\" font-weight=\"bold\" fill=\"#0f172a\">H = 1,5 m</text>\n      <rect x=\"225\" y=\"48\" width=\"245\" height=\"114\" rx=\"8\" fill=\"#ffffff\" stroke=\"#cbd5e1\"/>\n      <text x=\"347\" y=\"76\" text-anchor=\"middle\" font-size=\"12\" font-weight=\"bold\" fill=\"#1e3a8a\">Độ sâu từ mặt thoáng: h = 1,5 - 0,7 = 0,8 m</text>\n      <text x=\"347\" y=\"108\" text-anchor=\"middle\" font-size=\"12\" font-weight=\"bold\" fill=\"#dc2626\">Áp suất thủy tĩnh tại M: p = d · h</text>\n      <text x=\"347\" y=\"140\" text-anchor=\"middle\" font-size=\"12.5\" font-weight=\"bold\" fill=\"#16a34a\">p = 10 000 × 0,8 = 8 000 Pa</text>\n    \n      <rect x=\"30\" y=\"182\" width=\"440\" height=\"28\" rx=\"6\" fill=\"#eff6ff\" stroke=\"#bfdbfe\"/>\n      <text x=\"250\" y=\"201\" text-anchor=\"middle\" font-size=\"12.5\" font-weight=\"bold\" fill=\"#1e3a8a\">Lưu ý: h phải tính từ MẶT THOÁNG xuống M: h = 1,5 - 0,7 = 0,8 m  ⟹  p = 8 000 Pa</text>\n    </svg>",
+                  "options": [
+                        "<span class=\"math\">8 000 Pa</span>",
+                        "<span class=\"math\">7 000 Pa</span>",
+                        "<span class=\"math\">15 000 Pa</span>",
+                        "<span class=\"math\">22 000 Pa</span>"
+                  ],
+                  "correctIndex": 0,
+                  "explanation": "Điểm <span class=\"math\">M</span> cách đáy bể <span class=\"math\">0,7 m</span> nên có độ sâu tính từ mặt thoáng của nước là <span class=\"math\">h = H - 0,7 = 1,5 - 0,7 = 0,8 m</span>. Áp suất của nước tại điểm <span class=\"math\">M</span> là: <span class=\"math\">p = d · h = 10 000 · 0,8 = 8 000 Pa</span>."
+            },
+            {
+                  "id": "L2_02",
+                  "tag": "Cấp độ 2 • Vận dụng (7–8 điểm)",
+                  "question": "Hai bình hình trụ chứa hai chất lỏng khác nhau: bình thứ nhất chứa chất lỏng có trọng lượng riêng <span class=\"math\">d<sub>1</sub></span>, chiều cao cột chất lỏng <span class=\"math\">h<sub>1</sub></span>; bình thứ hai chứa chất lỏng có trọng lượng riêng <span class=\"math\">d<sub>2</sub> = 1,5d<sub>1</sub></span> và chiều cao <span class=\"math\">h<sub>2</sub> = 0,6h<sub>1</sub></span>. Hệ thức liên hệ giữa áp suất chất lỏng ở đáy hai bình (<span class=\"math\">p<sub>1</sub></span> và <span class=\"math\">p<sub>2</sub></span>) là",
+                  "svg": "<svg viewBox=\"0 0 500 220\" xmlns=\"http://www.w3.org/2000/svg\">\n      <defs>\n        <marker id=\"arrB\" markerWidth=\"8\" markerHeight=\"8\" refX=\"6\" refY=\"4\" orient=\"auto\"><path d=\"M0,0 L8,4 L0,8 Z\" fill=\"#1d4ed8\"/></marker>\n        <marker id=\"arrR\" markerWidth=\"8\" markerHeight=\"8\" refX=\"6\" refY=\"4\" orient=\"auto\"><path d=\"M0,0 L8,4 L0,8 Z\" fill=\"#dc2626\"/></marker>\n        <marker id=\"arrG\" markerWidth=\"8\" markerHeight=\"8\" refX=\"6\" refY=\"4\" orient=\"auto\"><path d=\"M0,0 L8,4 L0,8 Z\" fill=\"#16a34a\"/></marker>\n        <marker id=\"arrP\" markerWidth=\"8\" markerHeight=\"8\" refX=\"6\" refY=\"4\" orient=\"auto\"><path d=\"M0,0 L8,4 L0,8 Z\" fill=\"#7c3aed\"/></marker>\n      </defs>\n      <rect width=\"500\" height=\"220\" rx=\"12\" fill=\"#f8fafc\" stroke=\"#e2e8f0\"/>\n      <text x=\"250\" y=\"22\" text-anchor=\"middle\" font-size=\"13\" font-weight=\"bold\" fill=\"#0f172a\">TỈ SỐ ÁP SUẤT ĐÁY BÌNH KHI ĐỔI CẢ d VÀ h</text>\n      \n      <rect x=\"70\" y=\"56\" width=\"110\" height=\"112\" fill=\"#dbeafe\" fill-opacity=\"0.75\" stroke=\"none\"/>\n      <polyline points=\"70,42 70,168 180,168 180,42\" fill=\"none\" stroke=\"#1e3a8a\" stroke-width=\"3\"/>\n      <line x1=\"70\" y1=\"56\" x2=\"180\" y2=\"56\" stroke=\"#2563eb\" stroke-width=\"2\" stroke-dasharray=\"5,3\"/>\n      <!-- Dashed depth projection -->\n      <circle cx=\"125\" cy=\"118\" r=\"5\" fill=\"#dc2626\"/>\n      <text x=\"136\" y=\"122\" font-size=\"11.5\" font-weight=\"bold\" fill=\"#dc2626\">p₂ = 0,9p₁</text>\n      <line x1=\"125\" y1=\"56\" x2=\"125\" y2=\"118\" stroke=\"#dc2626\" stroke-width=\"1.8\" stroke-dasharray=\"3,3\"/>\n      <text x=\"118\" y=\"92\" text-anchor=\"end\" font-size=\"11\" font-weight=\"bold\" fill=\"#dc2626\">d₂ = 1,5d₁</text>\n      <!-- Total height H projection -->\n      <line x1=\"48\" y1=\"56\" x2=\"70\" y2=\"56\" stroke=\"#64748b\" stroke-width=\"1.2\" stroke-dasharray=\"3,3\"/>\n      <line x1=\"48\" y1=\"168\" x2=\"70\" y2=\"168\" stroke=\"#64748b\" stroke-width=\"1.2\" stroke-dasharray=\"3,3\"/>\n      <line x1=\"54\" y1=\"56\" x2=\"54\" y2=\"168\" stroke=\"#0f172a\" stroke-width=\"1.8\"/>\n      <text x=\"48\" y=\"116\" text-anchor=\"end\" font-size=\"11\" font-weight=\"bold\" fill=\"#0f172a\">h₁ ; h₂=0,6h₁</text>\n      <rect x=\"225\" y=\"48\" width=\"245\" height=\"114\" rx=\"8\" fill=\"#ffffff\" stroke=\"#cbd5e1\"/>\n      <text x=\"347\" y=\"76\" text-anchor=\"middle\" font-size=\"12\" font-weight=\"bold\" fill=\"#1e3a8a\">Bình 1: p₁ = d₁ · h₁</text>\n      <text x=\"347\" y=\"108\" text-anchor=\"middle\" font-size=\"12\" font-weight=\"bold\" fill=\"#dc2626\">Bình 2: p₂ = d₂ · h₂ = 1,5d₁ × 0,6h₁</text>\n      <text x=\"347\" y=\"140\" text-anchor=\"middle\" font-size=\"12.5\" font-weight=\"bold\" fill=\"#16a34a\">Suy ra: p₂ = 0,9 · d₁ · h₁ = 0,9p₁</text>\n    \n      <rect x=\"30\" y=\"182\" width=\"440\" height=\"28\" rx=\"6\" fill=\"#eff6ff\" stroke=\"#bfdbfe\"/>\n      <text x=\"250\" y=\"201\" text-anchor=\"middle\" font-size=\"12.5\" font-weight=\"bold\" fill=\"#1e3a8a\">p₂ = d₂ · h₂ = (1,5 d₁) · (0,6 h₁) = 0,9 p₁</text>\n    </svg>",
+                  "options": [
+                        "<span class=\"math\">p<sub>2</sub> = 0,9p<sub>1</sub></span>",
+                        "<span class=\"math\">p<sub>2</sub> = 1,5p<sub>1</sub></span>",
+                        "<span class=\"math\">p<sub>2</sub> = 2,5p<sub>1</sub></span>",
+                        "<span class=\"math\">p<sub>2</sub> = 0,4p<sub>1</sub></span>"
+                  ],
+                  "correctIndex": 0,
+                  "explanation": "Áp suất chất lỏng ở đáy bình 1 là <span class=\"math\">p<sub>1</sub> = d<sub>1</sub> · h<sub>1</sub></span>. Áp suất chất lỏng ở đáy bình 2 là <span class=\"math\">p<sub>2</sub> = d<sub>2</sub> · h<sub>2</sub> = (1,5d<sub>1</sub>) · (0,6h<sub>1</sub>) = 0,9 · d<sub>1</sub> · h<sub>1</sub> = 0,9p<sub>1</sub></span>."
+            },
+            {
+                  "id": "L2_03",
+                  "tag": "Cấp độ 2 • Vận dụng (7–8 điểm)",
+                  "question": "Một chiếc tàu bị thủng một lỗ nhỏ ở đáy tại vị trí nằm sâu <span class=\"math\">h = 2,2 m</span> dưới mặt nước. Người ta đặt một miếng vá phẳng áp vào lỗ thủng từ phía trong tàu. Biết lỗ thủng có diện tích <span class=\"math\">S = 150 cm<sup>2</sup></span> và trọng lượng riêng của nước là <span class=\"math\">d = 10 000 N/m<sup>3</sup></span>. Độ lớn lực tối thiểu <span class=\"math\">F<sub>min</sub></span> cần tác dụng để giữ được miếng vá là",
+                  "svg": "<svg viewBox=\"0 0 500 220\" xmlns=\"http://www.w3.org/2000/svg\">\n      <defs>\n        <marker id=\"arrB\" markerWidth=\"8\" markerHeight=\"8\" refX=\"6\" refY=\"4\" orient=\"auto\"><path d=\"M0,0 L8,4 L0,8 Z\" fill=\"#1d4ed8\"/></marker>\n        <marker id=\"arrR\" markerWidth=\"8\" markerHeight=\"8\" refX=\"6\" refY=\"4\" orient=\"auto\"><path d=\"M0,0 L8,4 L0,8 Z\" fill=\"#dc2626\"/></marker>\n        <marker id=\"arrG\" markerWidth=\"8\" markerHeight=\"8\" refX=\"6\" refY=\"4\" orient=\"auto\"><path d=\"M0,0 L8,4 L0,8 Z\" fill=\"#16a34a\"/></marker>\n        <marker id=\"arrP\" markerWidth=\"8\" markerHeight=\"8\" refX=\"6\" refY=\"4\" orient=\"auto\"><path d=\"M0,0 L8,4 L0,8 Z\" fill=\"#7c3aed\"/></marker>\n      </defs>\n      <rect width=\"500\" height=\"220\" rx=\"12\" fill=\"#f8fafc\" stroke=\"#e2e8f0\"/>\n      <text x=\"250\" y=\"22\" text-anchor=\"middle\" font-size=\"13\" font-weight=\"bold\" fill=\"#0f172a\">TÍNH LỰC TỐI THIỂU GIỮ MIẾNG VÁ LỖ THỦNG ĐÁY TÀU</text>\n      \n      <rect x=\"70\" y=\"56\" width=\"110\" height=\"112\" fill=\"#dbeafe\" fill-opacity=\"0.75\" stroke=\"none\"/>\n      <polyline points=\"70,42 70,168 180,168 180,42\" fill=\"none\" stroke=\"#1e3a8a\" stroke-width=\"3\"/>\n      <line x1=\"70\" y1=\"56\" x2=\"180\" y2=\"56\" stroke=\"#2563eb\" stroke-width=\"2\" stroke-dasharray=\"5,3\"/>\n      <!-- Dashed depth projection -->\n      <circle cx=\"125\" cy=\"118\" r=\"5\" fill=\"#dc2626\"/>\n      <text x=\"136\" y=\"122\" font-size=\"11.5\" font-weight=\"bold\" fill=\"#dc2626\">S = 150 cm²</text>\n      <line x1=\"125\" y1=\"56\" x2=\"125\" y2=\"118\" stroke=\"#dc2626\" stroke-width=\"1.8\" stroke-dasharray=\"3,3\"/>\n      <text x=\"118\" y=\"92\" text-anchor=\"end\" font-size=\"11\" font-weight=\"bold\" fill=\"#dc2626\">h = 2,2 m</text>\n      <!-- Total height H projection -->\n      <line x1=\"48\" y1=\"56\" x2=\"70\" y2=\"56\" stroke=\"#64748b\" stroke-width=\"1.2\" stroke-dasharray=\"3,3\"/>\n      <line x1=\"48\" y1=\"168\" x2=\"70\" y2=\"168\" stroke=\"#64748b\" stroke-width=\"1.2\" stroke-dasharray=\"3,3\"/>\n      <line x1=\"54\" y1=\"56\" x2=\"54\" y2=\"168\" stroke=\"#0f172a\" stroke-width=\"1.8\"/>\n      <text x=\"48\" y=\"116\" text-anchor=\"end\" font-size=\"11\" font-weight=\"bold\" fill=\"#0f172a\">h = 2,2 m</text>\n      <rect x=\"225\" y=\"48\" width=\"245\" height=\"114\" rx=\"8\" fill=\"#ffffff\" stroke=\"#cbd5e1\"/>\n      <text x=\"347\" y=\"76\" text-anchor=\"middle\" font-size=\"12\" font-weight=\"bold\" fill=\"#1e3a8a\">Áp suất nước tại lỗ thủng: p = d · h = 22 000 Pa</text>\n      <text x=\"347\" y=\"108\" text-anchor=\"middle\" font-size=\"12\" font-weight=\"bold\" fill=\"#dc2626\">Diện tích lỗ thủng: S = 150 cm² = 0,015 m²</text>\n      <text x=\"347\" y=\"140\" text-anchor=\"middle\" font-size=\"12.5\" font-weight=\"bold\" fill=\"#16a34a\">Lực giữ tối thiểu: F<tspan baseline-shift=\"sub\" font-size=\"78%\">min</tspan> = p · S = 22 000 × 0,015 = 330 N</text>\n    \n      <rect x=\"30\" y=\"182\" width=\"440\" height=\"28\" rx=\"6\" fill=\"#eff6ff\" stroke=\"#bfdbfe\"/>\n      <text x=\"250\" y=\"201\" text-anchor=\"middle\" font-size=\"12.5\" font-weight=\"bold\" fill=\"#1e3a8a\">F<tspan baseline-shift=\"sub\" font-size=\"78%\">min</tspan> = p · S = d · h · S = 10 000 × 2,2 × 0,015 = 330 N</text>\n    </svg>",
+                  "options": [
+                        "<span class=\"math\">330 N</span>",
+                        "<span class=\"math\">220 N</span>",
+                        "<span class=\"math\">3 300 N</span>",
+                        "<span class=\"math\">150 N</span>"
+                  ],
+                  "correctIndex": 0,
+                  "explanation": "Đổi diện tích lỗ thủng: <span class=\"math\">S = 150 cm<sup>2</sup> = 0,015 m<sup>2</sup></span>. Áp suất của nước tại độ sâu <span class=\"math\">h = 2,2 m</span> là <span class=\"math\">p = d · h = 10 000 · 2,2 = 22 000 Pa</span>. Lực tối thiểu để giữ miếng vá cân bằng với áp lực của nước: <span class=\"math\">F<sub>min</sub> = p · S = 22 000 · 0,015 = 330 N</span>."
+            },
+            {
+                  "id": "L2_04",
+                  "tag": "Cấp độ 2 • Vận dụng (7–8 điểm)",
+                  "question": "Người ta dùng một lực <span class=\"math\">f = 1 000 N</span> tác dụng lên pittông nhỏ có diện tích <span class=\"math\">s</span> của một máy nén thủy lực để nâng một ô tô có trọng lượng <span class=\"math\">F = 50 000 N</span> đặt trên pittông lớn có diện tích <span class=\"math\">S</span>. Mối liên hệ giữa diện tích pittông lớn <span class=\"math\">S</span> và diện tích pittông nhỏ <span class=\"math\">s</span> là",
+                  "svg": "<svg viewBox=\"0 0 500 220\" xmlns=\"http://www.w3.org/2000/svg\">\n      <defs>\n        <marker id=\"arrB\" markerWidth=\"8\" markerHeight=\"8\" refX=\"6\" refY=\"4\" orient=\"auto\"><path d=\"M0,0 L8,4 L0,8 Z\" fill=\"#1d4ed8\"/></marker>\n        <marker id=\"arrR\" markerWidth=\"8\" markerHeight=\"8\" refX=\"6\" refY=\"4\" orient=\"auto\"><path d=\"M0,0 L8,4 L0,8 Z\" fill=\"#dc2626\"/></marker>\n        <marker id=\"arrG\" markerWidth=\"8\" markerHeight=\"8\" refX=\"6\" refY=\"4\" orient=\"auto\"><path d=\"M0,0 L8,4 L0,8 Z\" fill=\"#16a34a\"/></marker>\n        <marker id=\"arrP\" markerWidth=\"8\" markerHeight=\"8\" refX=\"6\" refY=\"4\" orient=\"auto\"><path d=\"M0,0 L8,4 L0,8 Z\" fill=\"#7c3aed\"/></marker>\n      </defs>\n      <rect width=\"500\" height=\"220\" rx=\"12\" fill=\"#f8fafc\" stroke=\"#e2e8f0\"/>\n      <text x=\"250\" y=\"22\" text-anchor=\"middle\" font-size=\"13\" font-weight=\"bold\" fill=\"#0f172a\">NGUYÊN LÍ MÁY NÉN THỦY LỰC (ĐỊNH LUẬT PASCAL)</text>\n      <path d=\"M 60 70 L 60 155 L 195 155 L 195 70 L 145 70 L 145 130 L 90 130 L 90 70 Z\" fill=\"#dbeafe\" stroke=\"#1e3a8a\" stroke-width=\"2.5\"/>\n         <rect x=\"62\" y=\"82\" width=\"26\" height=\"10\" fill=\"#64748b\"/>\n         <rect x=\"147\" y=\"82\" width=\"46\" height=\"10\" fill=\"#64748b\"/>\n         <line x1=\"75\" y1=\"45\" x2=\"75\" y2=\"80\" stroke=\"#dc2626\" stroke-width=\"2.5\" marker-end=\"url(#arrR)\"/>\n         <text x=\"75\" y=\"40\" text-anchor=\"middle\" font-size=\"11\" font-weight=\"bold\" fill=\"#dc2626\">f = 1000 N</text>\n         <line x1=\"170\" y1=\"80\" x2=\"170\" y2=\"42\" stroke=\"#16a34a\" stroke-width=\"2.8\" marker-end=\"url(#arrG)\"/>\n         <text x=\"170\" y=\"38\" text-anchor=\"middle\" font-size=\"11\" font-weight=\"bold\" fill=\"#16a34a\">F = 50 000 N</text>\n         <text x=\"75\" y=\"108\" text-anchor=\"middle\" font-size=\"11\" font-weight=\"bold\" fill=\"#1e3a8a\">s</text>\n         <text x=\"170\" y=\"108\" text-anchor=\"middle\" font-size=\"11.5\" font-weight=\"bold\" fill=\"#1e3a8a\">S = 50s</text>\n         <rect x=\"225\" y=\"48\" width=\"245\" height=\"114\" rx=\"8\" fill=\"#ffffff\" stroke=\"#cbd5e1\"/>\n         <text x=\"347\" y=\"76\" text-anchor=\"middle\" font-size=\"12\" font-weight=\"bold\" fill=\"#1e3a8a\">Áp suất truyền nguyên vẹn: p₁ = p₂</text>\n         <text x=\"347\" y=\"108\" text-anchor=\"middle\" font-size=\"12.5\" font-weight=\"bold\" fill=\"#dc2626\">F / S = f / s  ⟹  S / s = F / f</text>\n         <text x=\"347\" y=\"140\" text-anchor=\"middle\" font-size=\"12.5\" font-weight=\"bold\" fill=\"#16a34a\">S / s = 50 000 / 1 000 = 50  ⟹  S = 50s</text>\n      <rect x=\"30\" y=\"182\" width=\"440\" height=\"28\" rx=\"6\" fill=\"#eff6ff\" stroke=\"#bfdbfe\"/>\n      <text x=\"250\" y=\"201\" text-anchor=\"middle\" font-size=\"12.5\" font-weight=\"bold\" fill=\"#1e3a8a\">Nguyên lí máy thủy lực: F / S = f / s  ⟹  S = (F / f) · s = 50s</text>\n    </svg>",
+                  "options": [
+                        "<span class=\"math\">S = 50s</span>",
+                        "<span class=\"math\">S = 5s</span>",
+                        "<span class=\"math\">S = 500s</span>",
+                        "<span class=\"math\">S = 0,02s</span>"
+                  ],
+                  "correctIndex": 0,
+                  "explanation": "Theo nguyên lí truyền áp suất Pascal trong máy thủy lực: <span class=\"math\">p<sub>1</sub> = p<sub>2</sub> ⇔ <span class=\"frac\"><span class=\"num\">F</span><span class=\"den\">S</span></span> = <span class=\"frac\"><span class=\"num\">f</span><span class=\"den\">s</span></span> ⇒ <span class=\"frac\"><span class=\"num\">S</span><span class=\"den\">s</span></span> = <span class=\"frac\"><span class=\"num\">F</span><span class=\"den\">f</span></span> = <span class=\"frac\"><span class=\"num\">50 000</span><span class=\"den\">1 000</span></span> = 50 ⇒ S = 50s</span>."
+            },
+            {
+                  "id": "L2_05",
+                  "tag": "Cấp độ 2 • Vận dụng (7–8 điểm)",
+                  "question": "Đặt một khối sắt đặc có thể tích <span class=\"math\">V<sub>1</sub> = 1 dm<sup>3</sup></span> lên đĩa trái của một chiếc cân Robecvan. Hỏi phải đổ bao nhiêu lít nước (đựng trong bình nhẹ có khối lượng không đáng kể) lên đĩa phải để cân nằm thăng bằng? Biết khối lượng riêng của sắt là <span class=\"math\">ρ<sub>1</sub> = 7 800 kg/m<sup>3</sup></span> và của nước là <span class=\"math\">ρ<sub>2</sub> = 1 000 kg/m<sup>3</sup></span>.",
+                  "svg": "<svg viewBox=\"0 0 500 220\" xmlns=\"http://www.w3.org/2000/svg\">\n      <defs>\n        <marker id=\"arrB\" markerWidth=\"8\" markerHeight=\"8\" refX=\"6\" refY=\"4\" orient=\"auto\"><path d=\"M0,0 L8,4 L0,8 Z\" fill=\"#1d4ed8\"/></marker>\n        <marker id=\"arrR\" markerWidth=\"8\" markerHeight=\"8\" refX=\"6\" refY=\"4\" orient=\"auto\"><path d=\"M0,0 L8,4 L0,8 Z\" fill=\"#dc2626\"/></marker>\n        <marker id=\"arrG\" markerWidth=\"8\" markerHeight=\"8\" refX=\"6\" refY=\"4\" orient=\"auto\"><path d=\"M0,0 L8,4 L0,8 Z\" fill=\"#16a34a\"/></marker>\n        <marker id=\"arrP\" markerWidth=\"8\" markerHeight=\"8\" refX=\"6\" refY=\"4\" orient=\"auto\"><path d=\"M0,0 L8,4 L0,8 Z\" fill=\"#7c3aed\"/></marker>\n      </defs>\n      <rect width=\"500\" height=\"220\" rx=\"12\" fill=\"#f8fafc\" stroke=\"#e2e8f0\"/>\n      <text x=\"250\" y=\"22\" text-anchor=\"middle\" font-size=\"13\" font-weight=\"bold\" fill=\"#0f172a\">CÂN ROBECVAN THĂNG BẰNG GIỮA KHỐI SẮT VÀ BÌNH NƯỚC</text>\n      \n      <line x1=\"45\" y1=\"148\" x2=\"215\" y2=\"148\" stroke=\"#334155\" stroke-width=\"3.5\"/>\n      <rect x=\"85\" y=\"88\" width=\"90\" height=\"60\" rx=\"4\" fill=\"#fde047\" stroke=\"#ca8a04\" stroke-width=\"2.2\"/>\n      <text x=\"130\" y=\"114\" text-anchor=\"middle\" font-size=\"11.5\" font-weight=\"bold\" fill=\"#713f12\">Sắt V₁ = 1 dm³</text>\n      <line x1=\"130\" y1=\"118\" x2=\"130\" y2=\"168\" stroke=\"#dc2626\" stroke-width=\"2.8\" marker-end=\"url(#arrR)\"/>\n      <text x=\"144\" y=\"166\" font-size=\"11.5\" font-weight=\"bold\" fill=\"#dc2626\">m₁ = m₂ = 7,8 kg</text>\n      <text x=\"80\" y=\"164\" font-size=\"11\" font-weight=\"bold\" fill=\"#1d4ed8\">V₂ = 7,8 lít</text>\n      <rect x=\"228\" y=\"48\" width=\"242\" height=\"114\" rx=\"8\" fill=\"#ffffff\" stroke=\"#cbd5e1\"/>\n      <text x=\"349\" y=\"76\" text-anchor=\"middle\" font-size=\"12\" font-weight=\"bold\" fill=\"#1e3a8a\">Khối lượng sắt: m₁ = ρ₁ · V₁ = 7800 × 0,001 = 7,8 kg</text>\n      <text x=\"349\" y=\"108\" text-anchor=\"middle\" font-size=\"12\" font-weight=\"bold\" fill=\"#dc2626\">Cân thăng bằng: m₂ = m₁ = 7,8 kg</text>\n      <text x=\"349\" y=\"140\" text-anchor=\"middle\" font-size=\"12.5\" font-weight=\"bold\" fill=\"#16a34a\">Thể tích nước: V₂ = m₂ / ρ₂ = 7,8 / 1000 = 7,8 lít</text>\n    \n      <rect x=\"30\" y=\"182\" width=\"440\" height=\"28\" rx=\"6\" fill=\"#eff6ff\" stroke=\"#bfdbfe\"/>\n      <text x=\"250\" y=\"201\" text-anchor=\"middle\" font-size=\"12.5\" font-weight=\"bold\" fill=\"#1e3a8a\">ρ₁ · V₁ = ρ₂ · V₂  ⟹  V₂ = (7800 / 1000) × 1 dm³ = 7,8 lít</text>\n    </svg>",
+                  "options": [
+                        "<span class=\"math\">7,8 lít</span>",
+                        "<span class=\"math\">3,9 lít</span>",
+                        "<span class=\"math\">78 lít</span>",
+                        "<span class=\"math\">1,0 lít</span>"
+                  ],
+                  "correctIndex": 0,
+                  "explanation": "Cân Robecvan nằm thăng bằng khi khối lượng nước bằng khối lượng khối sắt: <span class=\"math\">m<sub>1</sub> = m<sub>2</sub> ⇔ ρ<sub>1</sub> · V<sub>1</sub> = ρ<sub>2</sub> · V<sub>2</sub> ⇒ V<sub>2</sub> = <span class=\"frac\"><span class=\"num\">ρ<sub>1</sub></span><span class=\"den\">ρ<sub>2</sub></span></span> · V<sub>1</sub> = <span class=\"frac\"><span class=\"num\">7 800</span><span class=\"den\">1 000</span></span> · 1 = 7,8 dm<sup>3</sup> = 7,8 lít</span>."
+            }
+      ],
+      "3": [
+            {
+                  "id": "L3_01",
+                  "tag": "Cấp độ 3 • Vận dụng cao (9–10 điểm)",
+                  "question": "Một vật đặc có dạng hình hộp chữ nhật kích thước <span class=\"math\">20 cm × 10 cm × 5 cm</span> đặt trên mặt bàn nằm ngang. Biết khối lượng riêng của chất làm vật là <span class=\"math\">ρ = 1 840 kg/m<sup>3</sup></span> và <span class=\"math\">g = 10 m/s<sup>2</sup></span>. Áp suất lớn nhất (<span class=\"math\">p<sub>max</sub></span>) và áp suất nhỏ nhất (<span class=\"math\">p<sub>min</sub></span>) mà vật đó có thể gây ra lên mặt bàn lần lượt là",
+                  "svg": "<svg viewBox=\"0 0 500 220\" xmlns=\"http://www.w3.org/2000/svg\">\n      <defs>\n        <marker id=\"arrB\" markerWidth=\"8\" markerHeight=\"8\" refX=\"6\" refY=\"4\" orient=\"auto\"><path d=\"M0,0 L8,4 L0,8 Z\" fill=\"#1d4ed8\"/></marker>\n        <marker id=\"arrR\" markerWidth=\"8\" markerHeight=\"8\" refX=\"6\" refY=\"4\" orient=\"auto\"><path d=\"M0,0 L8,4 L0,8 Z\" fill=\"#dc2626\"/></marker>\n        <marker id=\"arrG\" markerWidth=\"8\" markerHeight=\"8\" refX=\"6\" refY=\"4\" orient=\"auto\"><path d=\"M0,0 L8,4 L0,8 Z\" fill=\"#16a34a\"/></marker>\n        <marker id=\"arrP\" markerWidth=\"8\" markerHeight=\"8\" refX=\"6\" refY=\"4\" orient=\"auto\"><path d=\"M0,0 L8,4 L0,8 Z\" fill=\"#7c3aed\"/></marker>\n      </defs>\n      <rect width=\"500\" height=\"220\" rx=\"12\" fill=\"#f8fafc\" stroke=\"#e2e8f0\"/>\n      <text x=\"250\" y=\"22\" text-anchor=\"middle\" font-size=\"13\" font-weight=\"bold\" fill=\"#0f172a\">ÁP SUẤT CỰC ĐẠI VÀ CỰC TIỂU CỦA KHỐI HỘP (20×10×5 cm)</text>\n      \n      <line x1=\"45\" y1=\"148\" x2=\"215\" y2=\"148\" stroke=\"#334155\" stroke-width=\"3.5\"/>\n      <rect x=\"85\" y=\"88\" width=\"90\" height=\"60\" rx=\"4\" fill=\"#fde047\" stroke=\"#ca8a04\" stroke-width=\"2.2\"/>\n      <text x=\"130\" y=\"114\" text-anchor=\"middle\" font-size=\"11.5\" font-weight=\"bold\" fill=\"#713f12\">P = 18,4 N</text>\n      <line x1=\"130\" y1=\"118\" x2=\"130\" y2=\"168\" stroke=\"#dc2626\" stroke-width=\"2.8\" marker-end=\"url(#arrR)\"/>\n      <text x=\"144\" y=\"166\" font-size=\"11.5\" font-weight=\"bold\" fill=\"#dc2626\">F<tspan baseline-shift=\"sub\" font-size=\"78%\">N</tspan> = 18,4 N</text>\n      <text x=\"80\" y=\"164\" font-size=\"11\" font-weight=\"bold\" fill=\"#1d4ed8\">S<tspan baseline-shift=\"sub\" font-size=\"78%\">min</tspan> , S<tspan baseline-shift=\"sub\" font-size=\"78%\">max</tspan></text>\n      <rect x=\"228\" y=\"48\" width=\"242\" height=\"114\" rx=\"8\" fill=\"#ffffff\" stroke=\"#cbd5e1\"/>\n      <text x=\"349\" y=\"76\" text-anchor=\"middle\" font-size=\"12\" font-weight=\"bold\" fill=\"#1e3a8a\">Trọng lượng: P = ρ · V · g = 1840 × 10⁻³ × 10 = 18,4 N</text>\n      <text x=\"349\" y=\"108\" text-anchor=\"middle\" font-size=\"12\" font-weight=\"bold\" fill=\"#dc2626\">S<tspan baseline-shift=\"sub\" font-size=\"78%\">min</tspan> = 10×5 = 50 cm² = 0,005 m² ⟹ p<tspan baseline-shift=\"sub\" font-size=\"78%\">max</tspan> = 3 680 Pa</text>\n      <text x=\"349\" y=\"140\" text-anchor=\"middle\" font-size=\"12.5\" font-weight=\"bold\" fill=\"#16a34a\">S<tspan baseline-shift=\"sub\" font-size=\"78%\">max</tspan> = 20×10 = 200 cm² = 0,02 m² ⟹ p<tspan baseline-shift=\"sub\" font-size=\"78%\">min</tspan> = 920 Pa</text>\n    \n      <rect x=\"30\" y=\"182\" width=\"440\" height=\"28\" rx=\"6\" fill=\"#eff6ff\" stroke=\"#bfdbfe\"/>\n      <text x=\"250\" y=\"201\" text-anchor=\"middle\" font-size=\"12.5\" font-weight=\"bold\" fill=\"#1e3a8a\">p<tspan baseline-shift=\"sub\" font-size=\"78%\">max</tspan> = P / S<tspan baseline-shift=\"sub\" font-size=\"78%\">min</tspan> = 3 680 Pa   ;   p<tspan baseline-shift=\"sub\" font-size=\"78%\">min</tspan> = P / S<tspan baseline-shift=\"sub\" font-size=\"78%\">max</tspan> = 920 Pa</text>\n    </svg>",
+                  "options": [
+                        "<span class=\"math\">p<sub>max</sub> = 3 680 Pa</span> và <span class=\"math\">p<sub>min</sub> = 920 Pa</span>",
+                        "<span class=\"math\">p<sub>max</sub> = 1 840 Pa</span> và <span class=\"math\">p<sub>min</sub> = 920 Pa</span>",
+                        "<span class=\"math\">p<sub>max</sub> = 3 680 Pa</span> và <span class=\"math\">p<sub>min</sub> = 1 840 Pa</span>",
+                        "<span class=\"math\">p<sub>max</sub> = 1 840 Pa</span> và <span class=\"math\">p<sub>min</sub> = 368 Pa</span>"
+                  ],
+                  "correctIndex": 0,
+                  "explanation": "Thể tích hình hộp: <span class=\"math\">V = 0,2 · 0,1 · 0,05 = 10<sup>-3</sup> m<sup>3</sup></span>. Trọng lượng (bằng áp lực <span class=\"math\">F<sub>N</sub></span>): <span class=\"math\">F<sub>N</sub> = P = ρ · V · g = 1840 · 10<sup>-3</sup> · 10 = 18,4 N</span>. Diện tích mặt tiếp xúc nhỏ nhất <span class=\"math\">S<sub>min</sub> = 0,1 · 0,05 = 5 · 10<sup>-3</sup> m<sup>2</sup> ⇒ p<sub>max</sub> = <span class=\"frac\"><span class=\"num\">18,4</span><span class=\"den\">5 · 10<sup>-3</sup></span></span> = 3 680 Pa</span>. Diện tích mặt tiếp xúc lớn nhất <span class=\"math\">S<sub>max</sub> = 0,2 · 0,1 = 2 · 10<sup>-2</sup> m<sup>2</sup> ⇒ p<sub>min</sub> = <span class=\"frac\"><span class=\"num\">18,4</span><span class=\"den\">2 · 10<sup>-2</sup></span></span> = 920 Pa</span>."
+            },
+            {
+                  "id": "L3_02",
+                  "tag": "Cấp độ 3 • Vận dụng cao (9–10 điểm)",
+                  "question": "Treo một vật bằng kim loại đặc vào một lực kế rồi nhúng chìm hoàn toàn vật vào một bình tràn đựng đầy nước thì thấy lực kế chỉ <span class=\"math\">F = 8,5 N</span>, đồng thời lượng nước tràn ra ngoài có thể tích <span class=\"math\">V = 0,5 lít</span>. Cho khối lượng riêng của nước là <span class=\"math\">ρ<sub>nước</sub> = 1 000 kg/m<sup>3</sup></span> và <span class=\"math\">g = 10 m/s<sup>2</sup></span>. Khối lượng <span class=\"math\">m</span> và khối lượng riêng <span class=\"math\">ρ</span> của vật lần lượt là",
+                  "svg": "<svg viewBox=\"0 0 500 220\" xmlns=\"http://www.w3.org/2000/svg\">\n      <defs>\n        <marker id=\"arrB\" markerWidth=\"8\" markerHeight=\"8\" refX=\"6\" refY=\"4\" orient=\"auto\"><path d=\"M0,0 L8,4 L0,8 Z\" fill=\"#1d4ed8\"/></marker>\n        <marker id=\"arrR\" markerWidth=\"8\" markerHeight=\"8\" refX=\"6\" refY=\"4\" orient=\"auto\"><path d=\"M0,0 L8,4 L0,8 Z\" fill=\"#dc2626\"/></marker>\n        <marker id=\"arrG\" markerWidth=\"8\" markerHeight=\"8\" refX=\"6\" refY=\"4\" orient=\"auto\"><path d=\"M0,0 L8,4 L0,8 Z\" fill=\"#16a34a\"/></marker>\n        <marker id=\"arrP\" markerWidth=\"8\" markerHeight=\"8\" refX=\"6\" refY=\"4\" orient=\"auto\"><path d=\"M0,0 L8,4 L0,8 Z\" fill=\"#7c3aed\"/></marker>\n      </defs>\n      <rect width=\"500\" height=\"220\" rx=\"12\" fill=\"#f8fafc\" stroke=\"#e2e8f0\"/>\n      <text x=\"250\" y=\"22\" text-anchor=\"middle\" font-size=\"13\" font-weight=\"bold\" fill=\"#0f172a\">XÁC ĐỊNH KHỐI LƯỢNG RIÊNG KIM LOẠI NHÚNG TRONG BÌNH TRÀN</text>\n      \n      <rect x=\"70\" y=\"62\" width=\"110\" height=\"106\" fill=\"#dbeafe\" fill-opacity=\"0.75\" stroke=\"none\"/>\n      <polyline points=\"70,42 70,168 180,168 180,42\" fill=\"none\" stroke=\"#1e3a8a\" stroke-width=\"3\"/>\n      <line x1=\"70\" y1=\"62\" x2=\"180\" y2=\"62\" stroke=\"#2563eb\" stroke-width=\"2\" stroke-dasharray=\"5,3\"/>\n      <rect x=\"103\" y=\"92\" width=\"44\" height=\"44\" rx=\"5\" fill=\"#f59e0b\" stroke=\"#b45309\" stroke-width=\"2\"/>\n      <text x=\"125\" y=\"118\" text-anchor=\"middle\" font-size=\"11\" font-weight=\"bold\" fill=\"#0f172a\">V = 0,5 lít</text>\n      <line x1=\"125\" y1=\"92\" x2=\"125\" y2=\"52\" stroke=\"#16a34a\" stroke-width=\"2.6\" marker-end=\"url(#arrG)\"/>\n      <text x=\"136\" y=\"58\" font-size=\"11.5\" font-weight=\"bold\" fill=\"#16a34a\">F<tspan baseline-shift=\"sub\" font-size=\"78%\">A</tspan> = 5 N</text>\n      <line x1=\"125\" y1=\"136\" x2=\"125\" y2=\"165\" stroke=\"#dc2626\" stroke-width=\"2.6\" marker-end=\"url(#arrR)\"/>\n      <text x=\"136\" y=\"162\" font-size=\"11.5\" font-weight=\"bold\" fill=\"#dc2626\">P = 13,5 N</text>\n      <rect x=\"225\" y=\"48\" width=\"245\" height=\"114\" rx=\"8\" fill=\"#ffffff\" stroke=\"#cbd5e1\"/>\n      <text x=\"347\" y=\"76\" text-anchor=\"middle\" font-size=\"12\" font-weight=\"bold\" fill=\"#1e3a8a\">Lực đẩy Archimedes: F<tspan baseline-shift=\"sub\" font-size=\"78%\">A</tspan> = d<tspan baseline-shift=\"sub\" font-size=\"78%\">nước</tspan> · V = 10000 × 5·10⁻⁴ = 5 N</text>\n      <text x=\"347\" y=\"108\" text-anchor=\"middle\" font-size=\"12\" font-weight=\"bold\" fill=\"#dc2626\">Trọng lượng vật: P = F + F<tspan baseline-shift=\"sub\" font-size=\"78%\">A</tspan> = 8,5 + 5 = 13,5 N ⟹ m = 1,35 kg</text>\n      <text x=\"347\" y=\"140\" text-anchor=\"middle\" font-size=\"12.5\" font-weight=\"bold\" fill=\"#16a34a\">Khối lượng riêng: ρ = m / V = 1,35 / (5·10⁻⁴) = 2700 kg/m³</text>\n    \n      <rect x=\"30\" y=\"182\" width=\"440\" height=\"28\" rx=\"6\" fill=\"#eff6ff\" stroke=\"#bfdbfe\"/>\n      <text x=\"250\" y=\"201\" text-anchor=\"middle\" font-size=\"12.5\" font-weight=\"bold\" fill=\"#1e3a8a\">F<tspan baseline-shift=\"sub\" font-size=\"78%\">A</tspan> = 5 N  ⟹  P = 8,5 + 5 = 13,5 N (m = 1,35 kg)  ⟹  ρ = 2 700 kg/m³ (Nhôm)</text>\n    </svg>",
+                  "options": [
+                        "<span class=\"math\">m = 1,35 kg</span> và <span class=\"math\">ρ = 2 700 kg/m<sup>3</sup></span> (Nhôm)",
+                        "<span class=\"math\">m = 13,5 kg</span> và <span class=\"math\">ρ = 2 700 kg/m<sup>3</sup></span> (Nhôm)",
+                        "<span class=\"math\">m = 0,85 kg</span> và <span class=\"math\">ρ = 1 700 kg/m<sup>3</sup></span>",
+                        "<span class=\"math\">m = 1,35 kg</span> và <span class=\"math\">ρ = 7 800 kg/m<sup>3</sup></span> (Sắt)"
+                  ],
+                  "correctIndex": 0,
+                  "explanation": "Thể tích vật bằng thể tích nước tràn ra: <span class=\"math\">V = 0,5 lít = 5 · 10<sup>-4</sup> m<sup>3</sup></span>. Lực đẩy Archimedes: <span class=\"math\">F<sub>A</sub> = ρ<sub>nước</sub> · g · V = 1000 · 10 · 5 · 10<sup>-4</sup> = 5 N</span>. Trọng lượng thực của vật: <span class=\"math\">P = F + F<sub>A</sub> = 8,5 + 5 = 13,5 N ⇒ m = <span class=\"frac\"><span class=\"num\">P</span><span class=\"den\">g</span></span> = 1,35 kg</span>. Khối lượng riêng của vật: <span class=\"math\">ρ = <span class=\"frac\"><span class=\"num\">m</span><span class=\"den\">V</span></span> = <span class=\"frac\"><span class=\"num\">1,35</span><span class=\"den\">5 · 10<sup>-4</sup></span></span> = 2 700 kg/m<sup>3</sup></span> (Nhôm)."
+            },
+            {
+                  "id": "L3_03",
+                  "tag": "Cấp độ 3 • Vận dụng cao (9–10 điểm)",
+                  "question": "Thả một khối lập phương đặc không thấm nước có cạnh <span class=\"math\">a = 20 cm</span> vào nước (<span class=\"math\">ρ<sub>nước</sub> = 1 000 kg/m<sup>3</sup></span>) thì thấy <span class=\"math\"><span class=\"frac\"><span class=\"num\">3</span><span class=\"den\">5</span></span></span> thể tích của khối bị chìm trong nước khi cân bằng. Nếu thả khối lập phương đó vào dầu (<span class=\"math\">ρ<sub>dầu</sub> = 800 kg/m<sup>3</sup></span>) và lấy <span class=\"math\">g = 10 m/s<sup>2</sup></span> thì tỉ số phần thể tích bị chìm trong dầu và trọng lượng <span class=\"math\">P</span> của vật lần lượt là",
+                  "svg": "<svg viewBox=\"0 0 500 220\" xmlns=\"http://www.w3.org/2000/svg\">\n      <defs>\n        <marker id=\"arrB\" markerWidth=\"8\" markerHeight=\"8\" refX=\"6\" refY=\"4\" orient=\"auto\"><path d=\"M0,0 L8,4 L0,8 Z\" fill=\"#1d4ed8\"/></marker>\n        <marker id=\"arrR\" markerWidth=\"8\" markerHeight=\"8\" refX=\"6\" refY=\"4\" orient=\"auto\"><path d=\"M0,0 L8,4 L0,8 Z\" fill=\"#dc2626\"/></marker>\n        <marker id=\"arrG\" markerWidth=\"8\" markerHeight=\"8\" refX=\"6\" refY=\"4\" orient=\"auto\"><path d=\"M0,0 L8,4 L0,8 Z\" fill=\"#16a34a\"/></marker>\n        <marker id=\"arrP\" markerWidth=\"8\" markerHeight=\"8\" refX=\"6\" refY=\"4\" orient=\"auto\"><path d=\"M0,0 L8,4 L0,8 Z\" fill=\"#7c3aed\"/></marker>\n      </defs>\n      <rect width=\"500\" height=\"220\" rx=\"12\" fill=\"#f8fafc\" stroke=\"#e2e8f0\"/>\n      <text x=\"250\" y=\"22\" text-anchor=\"middle\" font-size=\"13\" font-weight=\"bold\" fill=\"#0f172a\">VẬT NỔI CÂN BẰNG TRONG NƯỚC (CHÌM 3/5 V) VÀ TRONG DẦU</text>\n      \n      <rect x=\"70\" y=\"62\" width=\"110\" height=\"106\" fill=\"#dbeafe\" fill-opacity=\"0.75\" stroke=\"none\"/>\n      <polyline points=\"70,42 70,168 180,168 180,42\" fill=\"none\" stroke=\"#1e3a8a\" stroke-width=\"3\"/>\n      <line x1=\"70\" y1=\"62\" x2=\"180\" y2=\"62\" stroke=\"#2563eb\" stroke-width=\"2\" stroke-dasharray=\"5,3\"/>\n      <rect x=\"103\" y=\"92\" width=\"44\" height=\"44\" rx=\"5\" fill=\"#f59e0b\" stroke=\"#b45309\" stroke-width=\"2\"/>\n      <text x=\"125\" y=\"118\" text-anchor=\"middle\" font-size=\"11\" font-weight=\"bold\" fill=\"#0f172a\">a = 20 cm</text>\n      <line x1=\"125\" y1=\"92\" x2=\"125\" y2=\"52\" stroke=\"#16a34a\" stroke-width=\"2.6\" marker-end=\"url(#arrG)\"/>\n      <text x=\"136\" y=\"58\" font-size=\"11.5\" font-weight=\"bold\" fill=\"#16a34a\">F<tspan baseline-shift=\"sub\" font-size=\"78%\">A</tspan> = P = 48 N</text>\n      <line x1=\"125\" y1=\"136\" x2=\"125\" y2=\"165\" stroke=\"#dc2626\" stroke-width=\"2.6\" marker-end=\"url(#arrR)\"/>\n      <text x=\"136\" y=\"162\" font-size=\"11.5\" font-weight=\"bold\" fill=\"#dc2626\">P = 48 N</text>\n      <rect x=\"225\" y=\"48\" width=\"245\" height=\"114\" rx=\"8\" fill=\"#ffffff\" stroke=\"#cbd5e1\"/>\n      <text x=\"347\" y=\"76\" text-anchor=\"middle\" font-size=\"12\" font-weight=\"bold\" fill=\"#1e3a8a\">Trong nước: ρ<tspan baseline-shift=\"sub\" font-size=\"78%\">v</tspan>ật = (3/5) · ρ<tspan baseline-shift=\"sub\" font-size=\"78%\">nước</tspan> = 600 kg/m³</text>\n      <text x=\"347\" y=\"108\" text-anchor=\"middle\" font-size=\"12\" font-weight=\"bold\" fill=\"#dc2626\">Trọng lượng: P = ρ<tspan baseline-shift=\"sub\" font-size=\"78%\">v</tspan>ật · g · V = 6000 × 0,008 = 48 N</text>\n      <text x=\"347\" y=\"140\" text-anchor=\"middle\" font-size=\"12.5\" font-weight=\"bold\" fill=\"#16a34a\">Trong dầu: V<tspan baseline-shift=\"sub\" font-size=\"78%\">ch</tspan>ìm / V = ρ<tspan baseline-shift=\"sub\" font-size=\"78%\">v</tspan>ật / ρ<tspan baseline-shift=\"sub\" font-size=\"78%\">dầu</tspan> = 600 / 800 = 3/4</text>\n    \n      <rect x=\"30\" y=\"182\" width=\"440\" height=\"28\" rx=\"6\" fill=\"#eff6ff\" stroke=\"#bfdbfe\"/>\n      <text x=\"250\" y=\"201\" text-anchor=\"middle\" font-size=\"12.5\" font-weight=\"bold\" fill=\"#1e3a8a\">ρ<tspan baseline-shift=\"sub\" font-size=\"78%\">v</tspan>ật = 600 kg/m³  ⟹  P = 48 N  và  V<tspan baseline-shift=\"sub\" font-size=\"78%\">ch</tspan>ìm(dầu) / V = 600 / 800 = 3/4</text>\n    </svg>",
+                  "options": [
+                        "Chìm <span class=\"math\"><span class=\"frac\"><span class=\"num\">3</span><span class=\"den\">4</span></span></span> thể tích và <span class=\"math\">P = 48 N</span>",
+                        "Chìm <span class=\"math\"><span class=\"frac\"><span class=\"num\">4</span><span class=\"den\">5</span></span></span> thể tích và <span class=\"math\">P = 48 N</span>",
+                        "Chìm <span class=\"math\"><span class=\"frac\"><span class=\"num\">3</span><span class=\"den\">4</span></span></span> thể tích và <span class=\"math\">P = 240 N</span>",
+                        "Chìm <span class=\"math\"><span class=\"frac\"><span class=\"num\">1</span><span class=\"den\">2</span></span></span> thể tích và <span class=\"math\">P = 60 N</span>"
+                  ],
+                  "correctIndex": 0,
+                  "explanation": "Thể tích khối lập phương: <span class=\"math\">V = 0,2<sup>3</sup> = 8 · 10<sup>-3</sup> m<sup>3</sup></span>. Khi nổi cân bằng trong nước: <span class=\"math\">P = F<sub>A(nước)</sub> = ρ<sub>nước</sub> · g · (<span class=\"frac\"><span class=\"num\">3</span><span class=\"den\">5</span></span>V) ⇒ ρ<sub>vật</sub> = <span class=\"frac\"><span class=\"num\">3</span><span class=\"den\">5</span></span>ρ<sub>nước</sub> = 600 kg/m<sup>3</sup></span>, và <span class=\"math\">P = 600 · 10 · 8 · 10<sup>-3</sup> = 48 N</span>. Khi thả vào dầu (<span class=\"math\">ρ<sub>dầu</sub> = 800 kg/m<sup>3</sup></span>): <span class=\"math\"><span class=\"frac\"><span class=\"num\">V<sub>chìm</sub></span><span class=\"den\">V</span></span> = <span class=\"frac\"><span class=\"num\">ρ<sub>vật</sub></span><span class=\"den\">ρ<sub>dầu</sub></span></span> = <span class=\"frac\"><span class=\"num\">600</span><span class=\"den\">800</span></span> = <span class=\"frac\"><span class=\"num\">3</span><span class=\"den\">4</span></span></span>."
+            },
+            {
+                  "id": "L3_04",
+                  "tag": "Cấp độ 3 • Vận dụng cao (9–10 điểm)",
+                  "question": "Mỗi viên gạch xây dựng có dạng hình hộp chữ nhật với thể tích tổng cộng (kể cả lỗ rỗng) là <span class=\"math\">V<sub>tp</sub> = 1 200 cm<sup>3</sup></span>, bên trong có <span class=\"math\">2</span> lỗ rỗng hình trụ, mỗi lỗ có thể tích <span class=\"math\">V<sub>0</sub> = 192 cm<sup>3</sup></span>. Biết khối lượng của mỗi viên gạch là <span class=\"math\">m = 1,6 kg</span> và <span class=\"math\">g = 10 m/s<sup>2</sup></span>. Khối lượng riêng <span class=\"math\">ρ</span> và trọng lượng riêng <span class=\"math\">d</span> của phần chất liệu gạch đặc lần lượt gần giá trị nào nhất?",
+                  "svg": "<svg viewBox=\"0 0 500 220\" xmlns=\"http://www.w3.org/2000/svg\">\n      <defs>\n        <marker id=\"arrB\" markerWidth=\"8\" markerHeight=\"8\" refX=\"6\" refY=\"4\" orient=\"auto\"><path d=\"M0,0 L8,4 L0,8 Z\" fill=\"#1d4ed8\"/></marker>\n        <marker id=\"arrR\" markerWidth=\"8\" markerHeight=\"8\" refX=\"6\" refY=\"4\" orient=\"auto\"><path d=\"M0,0 L8,4 L0,8 Z\" fill=\"#dc2626\"/></marker>\n        <marker id=\"arrG\" markerWidth=\"8\" markerHeight=\"8\" refX=\"6\" refY=\"4\" orient=\"auto\"><path d=\"M0,0 L8,4 L0,8 Z\" fill=\"#16a34a\"/></marker>\n        <marker id=\"arrP\" markerWidth=\"8\" markerHeight=\"8\" refX=\"6\" refY=\"4\" orient=\"auto\"><path d=\"M0,0 L8,4 L0,8 Z\" fill=\"#7c3aed\"/></marker>\n      </defs>\n      <rect width=\"500\" height=\"220\" rx=\"12\" fill=\"#f8fafc\" stroke=\"#e2e8f0\"/>\n      <text x=\"250\" y=\"22\" text-anchor=\"middle\" font-size=\"13\" font-weight=\"bold\" fill=\"#0f172a\">TÍNH KHỐI LƯỢNG RIÊNG CỦA VIÊN GẠCH HAI LỖ RỖNG</text>\n      \n      <line x1=\"45\" y1=\"148\" x2=\"215\" y2=\"148\" stroke=\"#334155\" stroke-width=\"3.5\"/>\n      <rect x=\"85\" y=\"88\" width=\"90\" height=\"60\" rx=\"4\" fill=\"#fde047\" stroke=\"#ca8a04\" stroke-width=\"2.2\"/>\n      <text x=\"130\" y=\"114\" text-anchor=\"middle\" font-size=\"11.5\" font-weight=\"bold\" fill=\"#713f12\">m = 1,6 kg</text>\n      <line x1=\"130\" y1=\"118\" x2=\"130\" y2=\"168\" stroke=\"#dc2626\" stroke-width=\"2.8\" marker-end=\"url(#arrR)\"/>\n      <text x=\"144\" y=\"166\" font-size=\"11.5\" font-weight=\"bold\" fill=\"#dc2626\">P = 16 N</text>\n      <text x=\"80\" y=\"164\" font-size=\"11\" font-weight=\"bold\" fill=\"#1d4ed8\">V<tspan baseline-shift=\"sub\" font-size=\"78%\">th</tspan>ực = 816 cm³</text>\n      <rect x=\"228\" y=\"48\" width=\"242\" height=\"114\" rx=\"8\" fill=\"#ffffff\" stroke=\"#cbd5e1\"/>\n      <text x=\"349\" y=\"76\" text-anchor=\"middle\" font-size=\"12\" font-weight=\"bold\" fill=\"#1e3a8a\">Thể tích đặc: V<tspan baseline-shift=\"sub\" font-size=\"78%\">th</tspan>ực = 1200 - 2×192 = 816 cm³</text>\n      <text x=\"349\" y=\"108\" text-anchor=\"middle\" font-size=\"12\" font-weight=\"bold\" fill=\"#dc2626\">Khối lượng riêng: ρ = 1,6 / (8,16·10⁻⁴) ≈ 1960,8 kg/m³</text>\n      <text x=\"349\" y=\"140\" text-anchor=\"middle\" font-size=\"12.5\" font-weight=\"bold\" fill=\"#16a34a\">Trọng lượng riêng: d = ρ · g ≈ 19 608 N/m³</text>\n    \n      <rect x=\"30\" y=\"182\" width=\"440\" height=\"28\" rx=\"6\" fill=\"#eff6ff\" stroke=\"#bfdbfe\"/>\n      <text x=\"250\" y=\"201\" text-anchor=\"middle\" font-size=\"12.5\" font-weight=\"bold\" fill=\"#1e3a8a\">V<tspan baseline-shift=\"sub\" font-size=\"78%\">th</tspan>ực = 816 cm³ = 8,16·10⁻⁴ m³  ⟹  ρ ≈ 1960,8 kg/m³  ;  d ≈ 19 608 N/m³</text>\n    </svg>",
+                  "options": [
+                        "<span class=\"math\">ρ ≈ 1 960,8 kg/m<sup>3</sup></span> và <span class=\"math\">d ≈ 19 608 N/m<sup>3</sup></span>",
+                        "<span class=\"math\">ρ ≈ 1 333,3 kg/m<sup>3</sup></span> và <span class=\"math\">d ≈ 13 333 N/m<sup>3</sup></span>",
+                        "<span class=\"math\">ρ ≈ 1 587,3 kg/m<sup>3</sup></span> và <span class=\"math\">d ≈ 15 873 N/m<sup>3</sup></span>",
+                        "<span class=\"math\">ρ ≈ 1 960,8 kg/m<sup>3</sup></span> và <span class=\"math\">d ≈ 1 960,8 N/m<sup>3</sup></span>"
+                  ],
+                  "correctIndex": 0,
+                  "explanation": "Thể tích phần gạch đặc thực tế của viên gạch là: <span class=\"math\">V<sub>thực</sub> = V<sub>tp</sub> - 2V<sub>0</sub> = 1200 - 2 · 192 = 816 cm<sup>3</sup> = 8,16 · 10<sup>-4</sup> m<sup>3</sup></span>. Khối lượng riêng của gạch: <span class=\"math\">ρ = <span class=\"frac\"><span class=\"num\">m</span><span class=\"den\">V<sub>thực</sub></span></span> = <span class=\"frac\"><span class=\"num\">1,6</span><span class=\"den\">8,16 · 10<sup>-4</sup></span></span> ≈ 1 960,8 kg/m<sup>3</sup></span>. Trọng lượng riêng: <span class=\"math\">d = ρ · g ≈ 19 608 N/m<sup>3</sup></span>."
+            },
+            {
+                  "id": "L3_05",
+                  "tag": "Cấp độ 3 • Vận dụng cao (9–10 điểm)",
+                  "question": "Khi treo một vật rắn đặc hình trụ ở ngoài không khí vào lực kế thì lực kế chỉ <span class=\"math\">150 N</span>. Khi nhúng vật chìm hoàn toàn vào trong nước (<span class=\"math\">ρ<sub>nước</sub> = 1 000 kg/m<sup>3</sup></span>) thì lực kế chỉ <span class=\"math\">90 N</span>. Lấy <span class=\"math\">g = 10 m/s<sup>2</sup></span>. Nếu thay nước bằng một chất lỏng khác có khối lượng riêng <span class=\"math\">ρ′ = 750 kg/m<sup>3</sup></span> và nhúng chìm hoàn toàn vật vào đó thì lực kế sẽ chỉ giá trị nào?",
+                  "svg": "<svg viewBox=\"0 0 500 220\" xmlns=\"http://www.w3.org/2000/svg\">\n      <defs>\n        <marker id=\"arrB\" markerWidth=\"8\" markerHeight=\"8\" refX=\"6\" refY=\"4\" orient=\"auto\"><path d=\"M0,0 L8,4 L0,8 Z\" fill=\"#1d4ed8\"/></marker>\n        <marker id=\"arrR\" markerWidth=\"8\" markerHeight=\"8\" refX=\"6\" refY=\"4\" orient=\"auto\"><path d=\"M0,0 L8,4 L0,8 Z\" fill=\"#dc2626\"/></marker>\n        <marker id=\"arrG\" markerWidth=\"8\" markerHeight=\"8\" refX=\"6\" refY=\"4\" orient=\"auto\"><path d=\"M0,0 L8,4 L0,8 Z\" fill=\"#16a34a\"/></marker>\n        <marker id=\"arrP\" markerWidth=\"8\" markerHeight=\"8\" refX=\"6\" refY=\"4\" orient=\"auto\"><path d=\"M0,0 L8,4 L0,8 Z\" fill=\"#7c3aed\"/></marker>\n      </defs>\n      <rect width=\"500\" height=\"220\" rx=\"12\" fill=\"#f8fafc\" stroke=\"#e2e8f0\"/>\n      <text x=\"250\" y=\"22\" text-anchor=\"middle\" font-size=\"13\" font-weight=\"bold\" fill=\"#0f172a\">TREO VẬT VÀO LỰC KẾ NHÚNG TRONG NƯỚC VÀ TRONG CHẤT LỎNG ρ′</text>\n      \n      <rect x=\"70\" y=\"62\" width=\"110\" height=\"106\" fill=\"#dbeafe\" fill-opacity=\"0.75\" stroke=\"none\"/>\n      <polyline points=\"70,42 70,168 180,168 180,42\" fill=\"none\" stroke=\"#1e3a8a\" stroke-width=\"3\"/>\n      <line x1=\"70\" y1=\"62\" x2=\"180\" y2=\"62\" stroke=\"#2563eb\" stroke-width=\"2\" stroke-dasharray=\"5,3\"/>\n      <rect x=\"103\" y=\"92\" width=\"44\" height=\"44\" rx=\"5\" fill=\"#f59e0b\" stroke=\"#b45309\" stroke-width=\"2\"/>\n      <text x=\"125\" y=\"118\" text-anchor=\"middle\" font-size=\"11\" font-weight=\"bold\" fill=\"#0f172a\">V = 6 dm³</text>\n      <line x1=\"125\" y1=\"92\" x2=\"125\" y2=\"52\" stroke=\"#16a34a\" stroke-width=\"2.6\" marker-end=\"url(#arrG)\"/>\n      <text x=\"136\" y=\"58\" font-size=\"11.5\" font-weight=\"bold\" fill=\"#16a34a\">F<tspan baseline-shift=\"sub\" font-size=\"78%\">A2</tspan> = 45 N</text>\n      <line x1=\"125\" y1=\"136\" x2=\"125\" y2=\"165\" stroke=\"#dc2626\" stroke-width=\"2.6\" marker-end=\"url(#arrR)\"/>\n      <text x=\"136\" y=\"162\" font-size=\"11.5\" font-weight=\"bold\" fill=\"#dc2626\">P = 150 N</text>\n      <rect x=\"225\" y=\"48\" width=\"245\" height=\"114\" rx=\"8\" fill=\"#ffffff\" stroke=\"#cbd5e1\"/>\n      <text x=\"347\" y=\"76\" text-anchor=\"middle\" font-size=\"12\" font-weight=\"bold\" fill=\"#1e3a8a\">Trong nước: F<tspan baseline-shift=\"sub\" font-size=\"78%\">A1</tspan> = 150 - 90 = 60 N ⟹ V = 0,006 m³</text>\n      <text x=\"347\" y=\"108\" text-anchor=\"middle\" font-size=\"12\" font-weight=\"bold\" fill=\"#dc2626\">Trong chất lỏng ρ′ = 750 kg/m³: F<tspan baseline-shift=\"sub\" font-size=\"78%\">A2</tspan> = 750×10×0,006 = 45 N</text>\n      <text x=\"347\" y=\"140\" text-anchor=\"middle\" font-size=\"12.5\" font-weight=\"bold\" fill=\"#16a34a\">Số chỉ lực kế: F₂ = P - F<tspan baseline-shift=\"sub\" font-size=\"78%\">A2</tspan> = 150 - 45 = 105 N</text>\n    \n      <rect x=\"30\" y=\"182\" width=\"440\" height=\"28\" rx=\"6\" fill=\"#eff6ff\" stroke=\"#bfdbfe\"/>\n      <text x=\"250\" y=\"201\" text-anchor=\"middle\" font-size=\"12.5\" font-weight=\"bold\" fill=\"#1e3a8a\">V = 6 dm³  ⟹  F<tspan baseline-shift=\"sub\" font-size=\"78%\">A2</tspan> = 45 N  ⟹  Số chỉ lực kế F₂ = 150 - 45 = 105 N</text>\n    </svg>",
+                  "options": [
+                        "<span class=\"math\">105 N</span>",
+                        "<span class=\"math\">115 N</span>",
+                        "<span class=\"math\">120 N</span>",
+                        "<span class=\"math\">95 N</span>"
+                  ],
+                  "correctIndex": 0,
+                  "explanation": "Trọng lượng của vật ngoài không khí là <span class=\"math\">P = 150 N</span>. Khi chìm hoàn toàn trong nước, lực đẩy Archimedes của nước là <span class=\"math\">F<sub>A1</sub> = P - F<sub>1</sub> = 150 - 90 = 60 N ⇒ V = <span class=\"frac\"><span class=\"num\">F<sub>A1</sub></span><span class=\"den\">ρ<sub>nước</sub> · g</span></span> = <span class=\"frac\"><span class=\"num\">60</span><span class=\"den\">10 000</span></span> = 6 · 10<sup>-3</sup> m<sup>3</sup></span> (<span class=\"math\">6 dm<sup>3</sup></span>). Khi nhúng chìm hoàn toàn trong chất lỏng <span class=\"math\">ρ′ = 750 kg/m<sup>3</sup></span>, lực đẩy Archimedes là <span class=\"math\">F<sub>A2</sub> = ρ′ · g · V = 750 · 10 · 6 · 10<sup>-3</sup> = 45 N</span>. Số chỉ lực kế lúc này là <span class=\"math\">F<sub>2</sub> = P - F<sub>A2</sub> = 150 - 45 = 105 N</span>."
+            }
+      ]
+};
+
+    // =========================================================================
+    // 3. QUẢN LÝ TRẠNG THÁI, ĐẢO CÂU HỎI / ĐÁP ÁN & KHÓA CHẶT CẤP ĐỘ 2, 3
+    // =========================================================================
+    const state = {
+      currentLevel: 1,
+      level1PerfectCount: 0, // Bắt buộc đạt đủ 3 lần đúng 12/12 mới mở khóa Cấp độ 2 & 3
+      teacherUnlocked: false,
+      level1AttemptNumber: 1,
+      activeQuestions: [],
+      answers: {},
+      bestScores: { 1: 0, 2: 0, 3: 0 },
+      history: []
+    };
+
+    function shuffleArray(arr) {
+      const copy = [...arr];
+      for (let i = copy.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [copy[i], copy[j]] = [copy[j], copy[i]];
+      }
+      return copy;
+    }
+
+    // Chỉ mở khóa Cấp độ 2 và 3 sau khi hoàn thành đúng 12/12 câu Cấp độ 1 đủ 3 lần
+    function isUnlocked(level) {
+      if (level === 1) return true;
+      return state.level1PerfectCount >= 3 || state.teacherUnlocked;
+    }
+
+    window.handleTeacherUnlock = function () {
+      if (state.teacherUnlocked) {
+        showSoundToast("🔓 Chế độ Giáo viên đã được mở khóa!", true);
+        return;
+      }
+      const inputEl = document.getElementById("teacherCodeInput");
+      const code = (inputEl ? inputEl.value : "").trim();
+      if (code === "1819") {
+        state.teacherUnlocked = true;
+        playUnlockFanfare();
+        showSoundToast("🔓 Mở khóa Chế độ Giáo viên thành công! Đã mở Cấp độ 2 & 3.", true);
+        if (inputEl) {
+          inputEl.value = "";
+          inputEl.placeholder = "Đã mở GV";
+          inputEl.disabled = true;
+        }
+        const btn = document.getElementById("btnTeacherUnlock");
+        if (btn) {
+          btn.textContent = "✅ Đã mở khóa GV";
+          btn.classList.add("unlocked");
+        }
+        renderUnlockProgress();
+      } else {
+        playFunnySound(false);
+        showSoundToast("❌ Mã mở khóa Giáo viên chưa đúng! Vui lòng nhập mã để mở khóa.", false);
+        if (inputEl) inputEl.focus();
+      }
+    };
+
+    function prepareLevelQuestions(level) {
+      const rawList = QUESTIONS_DB[level];
+      const shuffledQuestions = shuffleArray(rawList).map((q) => {
+        const optionObjs = q.options.map((text, idx) => ({
+          text,
+          isCorrect: idx === q.correctIndex
+        }));
+        const shuffledOptions = shuffleArray(optionObjs);
+        return {
+          ...q,
+          shuffledOptions
+        };
+      });
+      state.activeQuestions = shuffledQuestions;
+      state.answers = {};
+    }
+
+    function renderUnlockProgress() {
+      for (let i = 1; i <= 3; i++) {
+        const pill = document.getElementById("star" + i);
+        if (state.level1PerfectCount >= i) {
+          pill.className = "star-pill done";
+          pill.textContent = `🌟 Lần ${i}: Đạt 12/12`;
+        } else {
+          pill.className = "star-pill";
+          pill.textContent = `⭐ Lần ${i}: Chưa đạt`;
+        }
+      }
+
+      const titleEl = document.getElementById("unlockTitle");
+      const subEl = document.getElementById("unlockSubtitle");
+      const tab2 = document.getElementById("tabLevel2");
+      const tab3 = document.getElementById("tabLevel3");
+      const badge2 = document.getElementById("badgeLevel2");
+      const badge3 = document.getElementById("badgeLevel3");
+
+      if (state.level1PerfectCount >= 3 || state.teacherUnlocked) {
+        titleEl.innerHTML = state.teacherUnlocked && state.level1PerfectCount < 3 ? "🔓 CHẾ ĐỘ GIÁO VIÊN: Đã mở khóa Cấp độ 2 (7–8 điểm) và Cấp độ 3 (9–10 điểm)!" : "🔓 CHÚC MỪNG! Em đã hoàn thành đủ 3 lần đúng 12/12 câu Cấp độ 1 và MỞ KHÓA Cấp độ 2 &amp; 3!";
+        subEl.textContent = "Bây giờ em có thể bấm chọn Cấp độ 2 (7–8 điểm) và Cấp độ 3 (9–10 điểm) để tiếp tục luyện tập.";
+        tab2.classList.remove("locked");
+        tab3.classList.remove("locked");
+        badge2.textContent = "🔓 Đã mở • 5 câu";
+        badge3.textContent = "🔓 Đã mở • 5 câu";
+      } else {
+        const remain = 3 - state.level1PerfectCount;
+        titleEl.innerHTML = `🔒 Yêu cầu bắt buộc: Cần thêm ${remain} lần đạt 12/12 câu đúng ở Cấp độ 1 để mở khóa Cấp độ 2 &amp; 3!`;
+        subEl.textContent = "Học sinh bắt buộc phải làm hết 12 câu Cấp độ 1 và làm lại đủ 3 lần đúng hết 12/12 câu mới được mở khóa chuyển lên các cấp độ tiếp theo.";
+        tab2.classList.add("locked");
+        tab3.classList.add("locked");
+        badge2.textContent = "🔒 Khóa • 5 câu";
+        badge3.textContent = "🔒 Khóa • 5 câu";
+      }
+
+      [1, 2, 3].forEach((lv) => {
+        const tab = document.getElementById("tabLevel" + lv);
+        if (lv === state.currentLevel) {
+          tab.classList.add("active");
+        } else {
+          tab.classList.remove("active");
+        }
+      });
+    }
+
+    function updateToolbarStats() {
+      const total = state.activeQuestions.length;
+      const answeredCount = Object.keys(state.answers).length;
+      const correctCount = Object.values(state.answers).filter((a) => a.isCorrect).length;
+
+      const levelNames = {
+        1: "Cấp độ 1 (Nền tảng)",
+        2: "Cấp độ 2 (7–8 điểm)",
+        3: "Cấp độ 3 (9–10 điểm)"
+      };
+      document.getElementById("statCurrentLevel").textContent = levelNames[state.currentLevel];
+      document.getElementById("statProgress").textContent = `${answeredCount} / ${total}`;
+      document.getElementById("statCorrect").textContent = `${correctCount} / ${total}`;
+      document.getElementById("statAttempt").textContent = state.level1AttemptNumber;
+    }
+
+    function renderQuestions() {
+      const container = document.getElementById("questionsContainer");
+      container.innerHTML = "";
+      document.getElementById("roundSummary").classList.remove("show");
+
+      const letters = ["A", "B", "C", "D"];
+
+      state.activeQuestions.forEach((q, qIdx) => {
+        const card = document.createElement("article");
+        card.className = "question-card";
+        card.id = `qcard_${qIdx}`;
+
+        const optionsHtml = q.shuffledOptions
+          .map((opt, optIdx) => {
+            return `
+              <button type="button" class="option-btn" id="opt_${qIdx}_${optIdx}" onclick="handleSelectOption(${qIdx}, ${optIdx})">
+                <span class="option-letter">${letters[optIdx]}</span>
+                <span class="option-content">${opt.text}</span>
+              </button>
+            `;
+          })
+          .join("");
+
+        card.innerHTML = `
+          <div class="q-header">
+            <span class="q-num">Câu ${qIdx + 1} / ${state.activeQuestions.length}</span>
+            <span class="q-tag">${q.tag}</span>
+          </div>
+          <div class="q-text">${q.question}</div>
+          <div class="q-illustration">${q.svg}</div>
+          <div class="options-grid" id="optgrid_${qIdx}">
+            ${optionsHtml}
+          </div>
+          <div class="feedback-box" id="feedback_${qIdx}"></div>
+        `;
+
+        container.appendChild(card);
+      });
+
+      updateToolbarStats();
+    }
+
+    window.handleSelectOption = function (qIdx, optIdx) {
+      if (state.answers[qIdx] !== undefined) return;
+
+      const q = state.activeQuestions[qIdx];
+      const chosen = q.shuffledOptions[optIdx];
+      const isCorrect = chosen.isCorrect;
+
+      state.answers[qIdx] = {
+        selectedOptionIndex: optIdx,
+        isCorrect
+      };
+
+      playFunnySound(isCorrect);
+
+      const card = document.getElementById(`qcard_${qIdx}`);
+      card.classList.add(isCorrect ? "answered-correct" : "answered-wrong");
+
+      q.shuffledOptions.forEach((opt, i) => {
+        const btn = document.getElementById(`opt_${qIdx}_${i}`);
+        btn.disabled = true;
+        if (opt.isCorrect) {
+          btn.classList.add("correct");
+        } else if (i === optIdx && !isCorrect) {
+          btn.classList.add("wrong");
+        }
+      });
+
+      const fb = document.getElementById(`feedback_${qIdx}`);
+      const letters = ["A", "B", "C", "D"];
+      const rightIdx = q.shuffledOptions.findIndex((o) => o.isCorrect);
+      fb.className = "feedback-box show " + (isCorrect ? "correct" : "wrong");
+      fb.innerHTML = `
+        <div class="feedback-title">
+          ${isCorrect ? "✅ CHÍNH XÁC! Làm tốt lắm!" : `❌ CHƯA ĐÚNG! Đáp án đúng là phương án ${letters[rightIdx]}.`}
+        </div>
+        <div>💡 <b>Giải thích chi tiết:</b> ${q.explanation}</div>
+      `;
+
+      updateToolbarStats();
+      checkRoundCompletion();
+    };
+
+    function checkRoundCompletion() {
+      const total = state.activeQuestions.length;
+      const answeredCount = Object.keys(state.answers).length;
+      if (answeredCount < total) return;
+
+      const correctCount = Object.values(state.answers).filter((a) => a.isCorrect).length;
+      if (correctCount > state.bestScores[state.currentLevel]) {
+        state.bestScores[state.currentLevel] = correctCount;
+      }
+
+      const nowStr = new Date().toLocaleTimeString("vi-VN", { hour: "2-digit", minute: "2-digit", second: "2-digit" });
+      state.history.unshift({
+        time: nowStr,
+        level: state.currentLevel,
+        score: `${correctCount}/${total}`
+      });
+
+      const summaryBox = document.getElementById("roundSummary");
+      const summaryTitle = document.getElementById("summaryTitle");
+      const summaryText = document.getElementById("summaryText");
+      const btnNext = document.getElementById("btnNextLevel");
+      summaryBox.classList.add("show");
+
+      if (state.currentLevel === 1) {
+        if (correctCount === total) {
+          state.level1PerfectCount += 1;
+          renderUnlockProgress();
+          if (state.level1PerfectCount >= 3 || state.teacherUnlocked) {
+            playUnlockFanfare();
+            summaryTitle.innerHTML = `🏆 XUẤT SẮC! Đạt 12/12 câu (${state.level1PerfectCount}/3 lần) – ĐÃ MỞ KHÓA CẤP ĐỘ 2 &amp; 3!`;
+            summaryText.innerHTML = `Chúc mừng em đã vượt qua thử thách <b>3 lần đúng hết 12/12 câu Cấp độ 1</b>. Bây giờ em đã được mở khóa để chuyển lên <b>Cấp độ 2 (7–8 điểm)</b> và <b>Cấp độ 3 (9–10 điểm)</b>!`;
+            btnNext.style.display = "inline-flex";
+          } else {
+            summaryTitle.innerHTML = `🌟 Tuyệt vời! Em đạt 12/12 câu đúng (Đã tích lũy ${state.level1PerfectCount}/3 lần)!`;
+            summaryText.innerHTML = `Em cần làm lại Cấp độ 1 thêm <b>${3 - state.level1PerfectCount} lần đạt 12/12 câu đúng</b> nữa để mở khóa Cấp độ 2 và Cấp độ 3. Hãy bấm <b>"Làm lại cấp độ này (Đảo đề mới)"</b> nhé!`;
+            btnNext.style.display = "none";
+          }
+        } else {
+          summaryTitle.innerHTML = `💪 Kết quả lượt này: Đúng ${correctCount}/${total} câu!`;
+          summaryText.innerHTML = `Chưa đạt 12/12 câu nên lượt này chưa được tính vào 3 lần mở khóa (Hiện tại: <b>${state.level1PerfectCount}/3 lần</b>). Hãy đọc kĩ lời giải các câu sai và bấm <b>"Làm lại cấp độ này (Đảo đề mới)"</b> nhé!`;
+          btnNext.style.display = "none";
+        }
+      } else {
+        summaryTitle.innerHTML = `🎯 Hoàn thành Cấp độ ${state.currentLevel}: Đúng ${correctCount}/${total} câu!`;
+        summaryText.innerHTML = `Em có thể bấm làm lại để luyện tập với đề đảo mới, chuyển cấp độ, hoặc bấm nút <b>"Báo Họ Tên &amp; Kết Quả Thực Hiện"</b> ở phía trên.`;
+        btnNext.style.display = state.currentLevel === 2 ? "inline-flex" : "none";
+      }
+    }
+
+    window.selectLevel = function (level) {
+      if (!isUnlocked(level)) {
+        playFunnySound(false);
+        showSoundToast(`🔒 Cấp độ ${level} đang khóa! Phải đạt 12/12 câu Cấp độ 1 đủ 3 lần (Hiện tại: ${state.level1PerfectCount}/3) mới mở khóa!`, false);
+        return;
+      }
+      state.currentLevel = level;
+      prepareLevelQuestions(level);
+      renderUnlockProgress();
+      renderQuestions();
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    };
+
+    window.restartCurrentLevel = function () {
+      if (state.currentLevel === 1) {
+        state.level1AttemptNumber += 1;
+      }
+      prepareLevelQuestions(state.currentLevel);
+      renderQuestions();
+      window.scrollTo({ top: 180, behavior: "smooth" });
+    };
+
+    window.goNextUnlockedLevel = function () {
+      if (state.currentLevel === 1 && isUnlocked(2)) {
+        selectLevel(2);
+      } else if (state.currentLevel === 2 && isUnlocked(3)) {
+        selectLevel(3);
+      }
+    };
+
+    // =========================================================================
+    // 4. BÁO HỌ TÊN & KẾT QUẢ THỰC HIỆN (MODAL + SAO CHÉP)
+    // =========================================================================
+    function computeTotal10PointScale() {
+      const s1 = (state.bestScores[1] / 12) * 6;
+      const s2 = (state.bestScores[2] / 5) * 2;
+      const s3 = (state.bestScores[3] / 5) * 2;
+      return (s1 + s2 + s3).toFixed(2);
+    }
+
+    document.getElementById("btnShowReport").addEventListener("click", () => {
+      const fullName = document.getElementById("studentName").value.trim() || "(Chưa nhập họ tên)";
+      const className = document.getElementById("studentClass").value.trim() || "(Chưa nhập lớp)";
+
+      const totalScore = computeTotal10PointScale();
+      const unlockedText = state.level1PerfectCount >= 3 ? "✅ Đã mở khóa Cấp độ 2 & 3" : `🔒 Chưa mở khóa (${state.level1PerfectCount}/3 lần 12/12)`;
+
+      const historyHtml =
+        state.history.length === 0
+          ? `<div class="history-item">Chưa có lượt làm bài nào hoàn tất.</div>`
+          : state.history
+              .map(
+                (h, idx) =>
+                  `<div class="history-item">Lượt ${state.history.length - idx} (${h.time}) – <b>Cấp độ ${h.level}</b>: Đúng <b>${h.score}</b> câu</div>`
+              )
+              .join("");
+
+      const reportBody = document.getElementById("reportBody");
+      reportBody.innerHTML = `
+        <p style="margin-bottom:8px;">📌 <b>Chủ đề:</b> Chủ đề 34 – Khối Lượng Riêng & Áp Suất Chất Lỏng (Vật Lí 10)</p>
+        <table class="report-table">
+          <tbody>
+            <tr>
+              <th>Họ và tên học sinh</th>
+              <td><b>${fullName}</b></td>
+            </tr>
+            <tr>
+              <th>Lớp</th>
+              <td><b>${className}</b></td>
+            </tr>
+            <tr>
+              <th>Số lần đạt 12/12 Cấp độ 1</th>
+              <td><b>${state.level1PerfectCount} / 3 lần</b> (${unlockedText})</td>
+            </tr>
+            <tr>
+              <th>Kết quả cao nhất Cấp độ 1 (12 câu)</th>
+              <td><b>${state.bestScores[1]} / 12 câu</b></td>
+            </tr>
+            <tr>
+              <th>Kết quả cao nhất Cấp độ 2 (7–8đ: 5 câu)</th>
+              <td><b>${state.bestScores[2]} / 5 câu</b></td>
+            </tr>
+            <tr>
+              <th>Kết quả cao nhất Cấp độ 3 (9–10đ: 5 câu)</th>
+              <td><b>${state.bestScores[3]} / 5 câu</b></td>
+            </tr>
+            <tr>
+              <th>Tổng điểm quy đổi (Thang điểm 10)</th>
+              <td><b style="color:#dc2626; font-size:1.15rem;">${totalScore} / 10 điểm</b></td>
+            </tr>
+          </tbody>
+        </table>
+        <div style="font-weight:700; font-size:0.88rem; margin-top:10px;">🕒 Lịch sử các lượt hoàn thành trong phiên học:</div>
+        <div class="history-list">${historyHtml}</div>
+      `;
+
+      document.getElementById("reportModal").classList.add("show");
+    });
+
+    window.closeReportModal = function () {
+      document.getElementById("reportModal").classList.remove("show");
+    };
+
+    window.copyReportText = function () {
+      const fullName = document.getElementById("studentName").value.trim() || "(Chưa nhập họ tên)";
+      const className = document.getElementById("studentClass").value.trim() || "(Chưa nhập lớp)";
+      const totalScore = computeTotal10PointScale();
+      const text = [
+        "=== BÁO CÁO KẾT QUẢ LUYỆN TẬP VẬT LÍ 10 ===",
+        "Chủ đề 34: KHỐI LƯỢNG RIÊNG & ÁP SUẤT CHẤT LỎNG",
+        `Học sinh: ${fullName} - Lớp: ${className}`,
+        `- Cấp độ 1 (12 câu): Đạt ${state.bestScores[1]}/12 câu (Số lần đạt 12/12: ${state.level1PerfectCount}/3 lần)`,
+        `- Cấp độ 2 (7-8đ): Đạt ${state.bestScores[2]}/5 câu`,
+        `- Cấp độ 3 (9-10đ): Đạt ${state.bestScores[3]}/5 câu`,
+        `=> TỔNG ĐIỂM QUY ĐỔI: ${totalScore} / 10 điểm`
+      ].join("\n");
+
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(() => {
+          showSoundToast("📋 Đã sao chép kết quả! Em có thể dán gửi cho Giáo viên.", true);
+        });
+      } else {
+        alert(text);
+      }
+    };
+
+    // Khởi tạo bài làm lần đầu
+    prepareLevelQuestions(1);
+    renderUnlockProgress();
+    renderQuestions();
+  </script>
+</body>
+</html>
+
